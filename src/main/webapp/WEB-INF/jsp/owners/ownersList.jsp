@@ -9,13 +9,13 @@
     <h2>Owners</h2>
 
     <table id="ownersTable" class="table table-striped">
-        <thead>
+        <thead style="background-color: lightgray;">
         <tr>
-            <th style="width: 150px;">Name</th>
-            <th style="width: 200px;">Address</th>
-            <th>City</th>
-            <th style="width: 120px">Telephone</th>
-            <th>Pets</th>
+            <th style="background-color: lightgray;width: 150px;">Name</th>
+            <th style="background-color: lightgray; width: 200px;">Address</th>
+            <th style="background-color: lightgray;">City</th>
+            <th style="background-color: lightgray;width: 120px">Telephone</th>
+            <th style="background-color: lightgray;">Pets</th>
         </tr>
         </thead>
         <tbody>

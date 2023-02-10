@@ -14,6 +14,19 @@
     </parent>
     <name>petclinic</name>
 
+    <developers>
+        <developer>
+            <id>Guaje</id>
+            <name>Juan Jesús</name>
+            <email>guaje3181@gmail.com</email>
+            <organization>G4-43</organization>
+            <roles>
+                <role>Scrum Master</role>
+            </roles>
+            <timezone>Madrid</timezone>
+        </developer>
+    </developers>
+
     <properties>
 
         <!-- Generic properties -->

@@ -35,6 +35,16 @@
             </roles>
             <timezone>Madrid</timezone>
         </developer>
+        <developer>
+            <id>JoseJavierAlcobendas</id>
+            <name>José Javier</name>
+            <email>jjavierrr20@gmail.com</email>
+            <organization>G4-43</organization>
+            <roles>
+                <role>developer</role>
+            </roles>
+            <timezone>Madrid</timezone>
+        </developer>
     </developers>
 
     <properties>

@@ -45,6 +45,16 @@
             </roles>
             <timezone>Madrid</timezone>
         </developer>
+        <developer>
+            <id>javiernr02</id>
+            <name>Javier Nunes</name>
+            <email>javiernr02@gmail.com</email>
+            <organization>G4-43</organization>
+            <roles>
+                <role>developer</role>
+            </roles>
+            <timezone>Madrid</timezone>
+        </developer>
     </developers>
 
     <properties>

@@ -55,6 +55,16 @@
             </roles>
             <timezone>Madrid</timezone>
         </developer>
+         <developer>
+            <id>Davra02</id>
+            <name>David Reyes</name>
+            <email>davidreyesales@gmail.com</email>
+            <organization>G4-43</organization>
+            <roles>
+                <role>developer</role>
+            </roles>
+            <timezone>Madrid</timezone>
+        </developer>
     </developers>
 
     <properties>

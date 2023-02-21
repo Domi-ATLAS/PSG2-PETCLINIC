@@ -59,6 +59,14 @@ public class PetService {
 	public Pet findPetById(int id) throws DataAccessException {
 		return petRepository.findById(id);
 	}
+	@Transactional
+	public void deletePet(int id){
+		petRepository.deletePet(id);
+	}
+	@Transactional
+	public void deleteVisit(int id){
+		visitRepository.deleteVisit(id);
+	}
 
 	@Transactional(rollbackFor = DuplicatedPetNameException.class)
 	public void savePet(Pet pet) throws DataAccessException, DuplicatedPetNameException {

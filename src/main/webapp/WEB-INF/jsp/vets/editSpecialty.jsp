@@ -11,12 +11,12 @@
         </div>
         <form:form modelAttribute="specialty"
                    class="form-horizontal">
-                   <input type="hidden" name="id" value ="spec.id"/>
+                   <input type="hidden" name="spec.id" value ="spec.id"/>
             <c:forEach items="${specialty}" var="esp">
                         <tr>
                             <td>${esp.name}</td>
                             <td>
-                                <input type="radio" name="esp" value="${esp.name}" checked>
+                                <input type="radio" name="name" value="${esp.name}" checked>
                             </td>
                         </tr>
                     </c:forEach>

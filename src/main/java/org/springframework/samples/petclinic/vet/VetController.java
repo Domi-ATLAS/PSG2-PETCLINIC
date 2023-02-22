@@ -76,7 +76,7 @@ public class VetController {
 	}
 
 	@PostMapping("/vets/edit/{id}")
-	public  ModelAndView createOrUpdateVet(@PathVariable("id") int id,  BindingResult br, @Valid Vet vet){
+	public  ModelAndView createOrUpdateVet(@PathVariable("id") int id,  @Valid Vet vet, BindingResult br){
 		if (!br.hasErrors()) {
 			Vet vet2 = vetService.findVetById(id);
 			vet2.setFirstName(vet.getFirstName());
@@ -99,7 +99,7 @@ public class VetController {
 	}
 
 	@PostMapping("/vets/editSpecialty/{id}")
-	public ModelAndView editSpecialty(@PathVariable("id") int id,  BindingResult br, @Valid Specialty specialty){
+	public ModelAndView editSpecialty(@PathVariable("id") int id,  @Valid Specialty specialty, BindingResult br){
 		ModelAndView res = new ModelAndView("vets/editSpecialty");
 		List<Specialty> specialty1 = vetService.findAllSpecialty();
 		res.addObject("specialty", specialty1);
@@ -121,7 +121,7 @@ public class VetController {
         ModelAndView result = new ModelAndView("vets/createVet");
 		List<Specialty> specialty = vetService.findAllSpecialty();
         result.addObject("vet", vet);
-		result.addObject("especial", specialty);
+		result.addObject("specialty", specialty);
         return result;
     }
 

@@ -24,6 +24,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.pet.Pet;
 import org.springframework.samples.petclinic.pet.PetService;
+import org.springframework.samples.petclinic.pet.Visit;
 import org.springframework.samples.petclinic.user.AuthoritiesService;
 import org.springframework.samples.petclinic.user.UserService;
 import org.springframework.stereotype.Controller;
@@ -152,7 +153,11 @@ public class OwnerController {
 
 		Owner owner= ownerService.findOwnerById(ownerId);
 		List<Pet> petsList =owner.getPets();
-		
+		List<Visit> listVisit= petService.obteinVisits(petsList);
+		for(int e=0;e<listVisit.size();e++){
+			petService.deleteVisit(listVisit.get(e).getId());
+		 } 
+
 		for (int i=0;i<petsList.size();i++){
 			Pet pet= petsList.get(i);
 			petService.deletePet(pet.getId());

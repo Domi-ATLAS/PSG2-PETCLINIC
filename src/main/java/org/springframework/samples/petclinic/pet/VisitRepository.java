@@ -43,6 +43,8 @@ public interface VisitRepository extends Repository<Visit, Integer> {
 	 * @see BaseEntity#isNew
 	 */
 	void save(Visit visit) throws DataAccessException;
+	Visit findById(int id) throws DataAccessException;
+
 
 	List<Visit> findByPetId(Integer petId);
 	@Modifying

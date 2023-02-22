@@ -74,6 +74,7 @@
                             <tr>
                                 <td><petclinic:localDate date="${visit.date}" pattern="yyyy-MM-dd"/></td>
                                 <td><c:out value="${visit.description}"/></td>
+                                
                             </tr>
                         </c:forEach>
                         <tr>

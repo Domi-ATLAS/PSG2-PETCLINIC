@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * @author Juergen Hoeller
@@ -84,7 +85,12 @@ public class VisitController {
 		}
 	}
 
-
+	@GetMapping(value="/visits/{visitsId}/delete")
+	public ModelAndView deleteVisit(@PathVariable("visitsId") int  visitsId){
+		Visit visit = petService.findVisitById(visitsId);
+		petService.deleteVisit(visit.getId());
+		return new ModelAndView("redirect:/ownwers");
+	}
 
 	
 	@GetMapping(value = "/owners/*/pets/{petId}/visits")

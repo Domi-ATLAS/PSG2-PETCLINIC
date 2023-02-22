@@ -16,6 +16,8 @@
 package org.springframework.samples.petclinic.pet;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -72,9 +74,20 @@ public class PetService {
 				petRepository.save(pet);
 	}
 
+	public List<Pet> getAllPets(){
+		return petRepository.findAll();
+	}
 
 	public Collection<Visit> findVisitsByPetId(int petId) {
 		return visitRepository.findByPetId(petId);
+	}
+
+	public List<Pet> getPetsByOwnerUsername(String username){
+		List<Pet> pets = getAllPets();
+        List<Pet> petsFiltered = pets.stream()
+                    .filter(x->x.getOwner().getUser().getUsername().equals(username))
+                    .collect(Collectors.toList());
+		return petsFiltered;
 	}
 
 }

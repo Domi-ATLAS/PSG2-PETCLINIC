@@ -36,6 +36,8 @@ public interface PetRepository extends Repository<Pet, Integer> {
 	 */
 	@Query("SELECT ptype FROM PetType ptype ORDER BY ptype.name")
 	List<PetType> findPetTypes() throws DataAccessException;
+
+	List<Pet> findAll();
 	
 	/**
 	 * Retrieve a <code>Pet</code> from the data store by id.

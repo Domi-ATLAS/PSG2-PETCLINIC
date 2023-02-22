@@ -15,7 +15,7 @@
  */
 package org.springframework.samples.petclinic.vet;
 
-import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -40,8 +40,23 @@ public class VetService {
 	}		
 
 	@Transactional(readOnly = true)	
-	public Collection<Vet> findVets() throws DataAccessException {
+	public List<Vet> findVets() throws DataAccessException {
 		return vetRepository.findAll();
 	}	
+
+	@Transactional(readOnly = true)
+	public Vet findVetById(int id){
+		return vetRepository.findByid(id);
+	}
+
+	@Transactional
+    public void save(Vet vet) {
+		vetRepository.save(vet);
+    }
+
+	@Transactional(readOnly = true)
+    public List<Specialty> findAllSpecialty() {
+        return vetRepository.findAllSpecialty();
+    }
 
 }

@@ -17,10 +17,18 @@ package org.springframework.samples.petclinic.vet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
+import javax.validation.Valid;
 
 /**
  * @author Juergen Hoeller
@@ -59,4 +67,74 @@ public class VetController {
 		return vets;
 	}
 
+	@GetMapping("/vets/edit/{id}")
+	public ModelAndView editVet(@PathVariable("id") int id){
+		ModelAndView res = new ModelAndView("vets/editVet");
+		Vet vet = vetService.findVetById(id);
+		res.addObject("vet", vet);
+		return res;
+	}
+
+	@PostMapping("/vets/edit/{id}")
+	public  ModelAndView createOrUpdateVet(@PathVariable("id") int id,  BindingResult br, @Valid Vet vet){
+		if (!br.hasErrors()) {
+			Vet vet2 = vetService.findVetById(id);
+			vet2.setFirstName(vet.getFirstName());
+			vet2.setLastName(vet.getLastName());
+            vetService.save(vet2);
+        } else {
+			return new ModelAndView("redirect:/vets/edit/{id}");
+        }
+        return new ModelAndView("redirect:/vets");
+	}
+
+	@GetMapping("/vets/editSpecialty/{id}")
+	public ModelAndView editSpecialityForm(@PathVariable("id") int id){
+		ModelAndView res = new ModelAndView("vets/editSpecialty");
+		List<Specialty> specialty = vetService.findAllSpecialty();
+		Specialty spec = new Specialty();
+		res.addObject("spec",spec);
+		res.addObject("specialty", specialty);
+		return res;
+	}
+
+	@PostMapping("/vets/editSpecialty/{id}")
+	public ModelAndView editSpecialty(@PathVariable("id") int id,  BindingResult br, @Valid Specialty specialty){
+		ModelAndView res = new ModelAndView("vets/editSpecialty");
+		List<Specialty> specialty1 = vetService.findAllSpecialty();
+		res.addObject("specialty", specialty1);
+		if (!br.hasErrors()) {
+           Vet vet = vetService.findVetById(id);
+		   List<Specialty> specialtiesAux = vetService.findAllSpecialty();
+			Specialty specialtyAux = specialtiesAux.stream().filter(x->x.getName().equals(specialty.getName())).collect(Collectors.toList()).get(0);
+		   vet.addSpecialty(specialtyAux);
+		   vetService.save(vet);
+        } else {
+			return new ModelAndView("redirect:/vets/editSpecialty/{id}");
+        }
+        return new ModelAndView("redirect:/vets");
+	}
+
+	@GetMapping("/vets/new")
+    public ModelAndView createVet(){
+        Vet vet = new Vet();
+        ModelAndView result = new ModelAndView("vets/createVet");
+		List<Specialty> specialty = vetService.findAllSpecialty();
+        result.addObject("vet", vet);
+		result.addObject("especial", specialty);
+        return result;
+    }
+
+    @PostMapping("/vets/new")
+    public ModelAndView saveNewLogro(@Valid Vet vet, BindingResult br){
+        if(br.hasErrors()){
+            return new ModelAndView("vets/createVet",br.getModel());
+        }
+        vetService.save(vet);
+        ModelAndView result =new ModelAndView("redirect:/vets");
+        result.addObject("message", "El veterinario se añadió correctamente");
+        return result;
+    }
+
+	
 }

@@ -15,7 +15,9 @@
  */
 package org.springframework.samples.petclinic.pet;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -58,6 +60,29 @@ public class PetService {
 	@Transactional(readOnly = true)
 	public Pet findPetById(int id) throws DataAccessException {
 		return petRepository.findById(id);
+	}
+	@Transactional
+	public void deletePet(int id){
+		petRepository.deletePet(id);
+	}
+	@Transactional
+	public void deleteVisit(int id){
+		visitRepository.deleteVisit(id);
+	}
+	@Transactional
+	public List<Visit> obteinVisits(List<Pet> pets){
+		List<Visit> result= new ArrayList<>();
+		for (int i=0;i<pets.size();i++){
+			List<Visit> listVisit= pets.get(i).getVisits();
+			for(int e=0;e<listVisit.size();e++){
+				result.add(listVisit.get(e));
+			}
+		}
+		return result;
+	}
+	@Transactional
+	public Visit findVisitById(Integer i){
+		return visitRepository.findById(i);
 	}
 
 	@Transactional(rollbackFor = DuplicatedPetNameException.class)

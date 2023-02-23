@@ -53,11 +53,6 @@ public class VetService {
 		return vetRepository.findAll();
 	}	
 
-	@Transactional(readOnly = true)
-	public Vet findVetById(int id){
-		return vetRepository.findByid(id);
-	}
-
 	@Transactional
     public void save(Vet vet) {
 		vetRepository.save(vet);

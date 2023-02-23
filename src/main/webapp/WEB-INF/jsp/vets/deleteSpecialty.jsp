@@ -7,7 +7,7 @@
 <petclinic:layout pageName="specialty">
     <jsp:body>
         <div style="text-align: center; ">
-            <h2 style = "font-size: 40px; margin-bottom: 3%;";>A&#241;adir Especialidad de ${nameVet}</h2>
+            <h2 style = "font-size: 40px; margin-bottom: 3%;";>Eliminar Especialidad de ${nameVet}</h2>
         </div>
         <form:form modelAttribute="specialty"
                    class="form-horizontal">

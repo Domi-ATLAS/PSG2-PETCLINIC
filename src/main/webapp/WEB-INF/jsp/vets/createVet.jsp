@@ -17,7 +17,7 @@
                 <petclinic:inputField label="Apellido:" name="lastName"/>
             </div>
             <div style="text-align:center; margin-top: 1%;">
-                    <button class="btn btn-default" style="font-size: 20px; font-family: sans-serif; "  type="submit" href="/vets/new">Crearlo</button>
+                    <button class="btn btn-default" style="font-size: 20px; font-family: sans-serif; "  type="submit" href="/vets/new">Crear</button>
             </div>
         </form:form>                 
     </jsp:body>

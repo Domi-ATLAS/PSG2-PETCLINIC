@@ -93,8 +93,10 @@ public class VetController {
 		ModelAndView res = new ModelAndView("vets/editSpecialty");
 		List<Specialty> specialty = vetService.findAllSpecialty();
 		Specialty spec = new Specialty();
+		Vet vet = vetService.findVetById(id);
 		res.addObject("spec",spec);
 		res.addObject("specialty", specialty);
+		res.addObject("nameVet", vet.getFirstName());
 		return res;
 	}
 
@@ -106,11 +108,40 @@ public class VetController {
 		if (!br.hasErrors()) {
            Vet vet = vetService.findVetById(id);
 		   List<Specialty> specialtiesAux = vetService.findAllSpecialty();
-			Specialty specialtyAux = specialtiesAux.stream().filter(x->x.getName().equals(specialty.getName())).collect(Collectors.toList()).get(0);
+		   Specialty specialtyAux = specialtiesAux.stream().filter(x->x.getName().equals(specialty.getName())).collect(Collectors.toList()).get(0);
 		   vet.addSpecialty(specialtyAux);
 		   vetService.save(vet);
         } else {
 			return new ModelAndView("redirect:/vets/editSpecialty/{id}");
+        }
+        return new ModelAndView("redirect:/vets");
+	}
+
+	@GetMapping("/vets/deleteSpecialty/{id}")
+	public ModelAndView deleteSpecialityForm(@PathVariable("id") int id){
+		ModelAndView res = new ModelAndView("vets/deleteSpecialty");
+		List<Specialty> specialty = vetService.findAllSpecialty();
+		Vet vet = vetService.findVetById(id);
+		Specialty spec = new Specialty();
+		res.addObject("spec",spec);
+		res.addObject("specialty", specialty);
+		res.addObject("nameVet", vet.getFirstName());
+		return res;
+	}
+
+	@PostMapping("/vets/deleteSpecialty/{id}")
+	public ModelAndView deleteSpeciality(@PathVariable("id") int id,  @Valid Specialty specialty, BindingResult br){
+		ModelAndView res = new ModelAndView("vets/deleteSpecialty");
+		List<Specialty> specialty1 = vetService.findAllSpecialty();
+		res.addObject("specialty", specialty1);
+		if (!br.hasErrors()) {
+           Vet vet = vetService.findVetById(id);
+		   List<Specialty> specialtiesAux = vetService.findAllSpecialty();
+		   Specialty specialtyAux = specialtiesAux.stream().filter(x->x.getName().equals(specialty.getName())).collect(Collectors.toList()).get(0);
+		   vet.deleteSpeciality(specialtyAux);
+		   vetService.save(vet);
+        } else {
+			return new ModelAndView("redirect:/vets/deleteSpecialty/{id}");
         }
         return new ModelAndView("redirect:/vets");
 	}

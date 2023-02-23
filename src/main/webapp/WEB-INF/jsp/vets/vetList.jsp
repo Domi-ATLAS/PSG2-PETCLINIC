@@ -14,6 +14,7 @@
             <th>Especialidades</th>
             <th>Editar</th>
             <th>A&#241;adir Especialidades</th>
+            <th>Eliminar Especialidades</th>
         </tr>
         </thead>
         <tbody>
@@ -36,6 +37,11 @@
                 <td>
                     <a href="/vets/editSpecialty/${vet.id}">   
                         <span class="glyphicon glyphicon-plus" aria-hidden="true" style=" margin-left: 20%"></span>     
+                    </a>
+                </td>
+                <td>
+                    <a href="/vets/deleteSpecialty/${vet.id}">   
+                        <span class="glyphicon glyphicon-minus" aria-hidden="true" style=" margin-left: 20%"></span>     
                     </a>
                 </td>
             </tr>

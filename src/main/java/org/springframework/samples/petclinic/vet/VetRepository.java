@@ -1,3 +1,4 @@
+
 /*
  * Copyright 2002-2013 the original author or authors.
  *
@@ -15,9 +16,11 @@
  */
 package org.springframework.samples.petclinic.vet;
 
-import java.util.Collection;
+import java.util.List;
 
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
@@ -34,13 +37,19 @@ import org.springframework.data.repository.query.Param;
  * @author Sam Brannen
  * @author Michael Isvy
  */
-public interface VetRepository extends Repository<Vet, Integer>{
+public interface VetRepository extends CrudRepository<Vet, Integer>{
 
 	/**
 	 * Retrieve all <code>Vet</code>s from the data store.
 	 * @return a <code>Collection</code> of <code>Vet</code>s
 	 */
-	Collection<Vet> findAll() throws DataAccessException;
+	List<Vet> findAll() throws DataAccessException;
+
+	@Query("SELECT o FROM Vet o WHERE o.id = ?1")
+	Vet findByid(int id);
+
+	@Query("SELECT o FROM Specialty o")
+    List<Specialty> findAllSpecialty();
 
 	Vet findById(int id) throws DataAccessException;
 	@Modifying

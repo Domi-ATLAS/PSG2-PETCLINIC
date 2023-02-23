@@ -19,6 +19,7 @@ import java.util.Collection;
 
 import javax.validation.Valid;
 
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.owner.Owner;
@@ -33,7 +34,9 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import java.util.List;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * @author Juergen Hoeller
@@ -116,6 +119,21 @@ public class PetController {
 		Pet pet = this.petService.findPetById(petId);
 		model.put("pet", pet);
 		return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
+	}
+	
+	@GetMapping("/pets/{petId}/delete")
+	public ModelAndView deletePet(@PathVariable("petId") int petId){
+
+		Pet pet = petService.findPetById(petId);
+		List<Visit> visits = pet.getVisits();
+		for(int i=0;i<visits.size();i++){
+			Visit visit= visits.get(i);
+			petService.deleteVisit(visit.getId());
+		}
+
+		petService.deletePet(pet.getId());
+		return new ModelAndView("redirect:/owners");
+ 
 	}
 
     /**

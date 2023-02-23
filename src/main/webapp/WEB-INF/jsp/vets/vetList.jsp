@@ -21,7 +21,11 @@
         <c:forEach items="${vets.vetList}" var="vet">
             <tr>
                 <td>
-                    <c:out value="${vet.firstName} ${vet.lastName}"/>
+                    <a  href="/vets/${vet.id}/delete" >
+                        <button class="btn btn-default" style="font-size:90%">
+                            Delete
+                        </button></a>
+                   <c:out value="${vet.firstName} ${vet.lastName}"/>
                 </td>
                 <td>
                     <c:forEach var="specialty" items="${vet.specialties}">
@@ -29,6 +33,7 @@
                     </c:forEach>
                     <c:if test="${vet.nrOfSpecialties == 0}">none</c:if>
                 </td>
+
                 <td>
                     <a href="/vets/edit/${vet.id}">   
                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>     
@@ -44,6 +49,7 @@
                         <span class="glyphicon glyphicon-minus" aria-hidden="true" style=" margin-left: 20%"></span>     
                     </a>
                 </td>
+
             </tr>
         </c:forEach>
         </tbody>

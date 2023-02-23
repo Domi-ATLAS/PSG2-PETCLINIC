@@ -18,7 +18,10 @@ package org.springframework.samples.petclinic.pet;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.samples.petclinic.model.BaseEntity;
 
 /**
@@ -40,7 +43,12 @@ public interface VisitRepository extends Repository<Visit, Integer> {
 	 * @see BaseEntity#isNew
 	 */
 	void save(Visit visit) throws DataAccessException;
+	Visit findById(int id) throws DataAccessException;
+
 
 	List<Visit> findByPetId(Integer petId);
+	@Modifying
+    @Query(value="DELETE FROM visits WHERE id = ?1",nativeQuery = true)
+    void deleteVisit(@Param("id") Integer id);
 
 }

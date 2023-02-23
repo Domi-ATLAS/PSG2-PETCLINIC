@@ -20,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -168,4 +169,11 @@ public class VetController {
     }
 
 	
+	@GetMapping(value="/vets/{vetId}/delete")
+	public ModelAndView deleteVet(@PathVariable("vetId") int vetId){
+		Vet vet = vetService.findVetById(vetId);
+		vetService.deleteVet(vet.getId());
+		return new ModelAndView("redirect:/vets");
+	}
+
 }

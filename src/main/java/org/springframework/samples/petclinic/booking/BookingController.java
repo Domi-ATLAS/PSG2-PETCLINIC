@@ -11,6 +11,7 @@ import org.springframework.samples.petclinic.pet.PetService;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -82,5 +83,15 @@ public class BookingController {
         res.addObject("principal",principal.getName());
         res.addObject("bookings",auxiliar);
         return res;
+    }
+
+    @GetMapping("/{id}/delete")
+    public ModelAndView deleteBooking(@PathVariable("id") Integer id){
+        Booking booking = bookingService.getBookingById(id).orElse(null);
+        if(booking != null){
+            bookingService.deleteBookingById(id);
+        }
+        return new ModelAndView(LIST_BOOKINGS);
+
     }
 }

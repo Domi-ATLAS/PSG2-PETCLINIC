@@ -3,6 +3,8 @@ package org.springframework.samples.petclinic.booking;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,6 +40,16 @@ public class BookingService {
     @Transactional(readOnly = true)
     public List<Booking> getAllBookings(){
         return (List<Booking>) bookingRepository.findAll();
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<Booking> getBookingById(Integer id){
+        return bookingRepository.findById(id);
+    }
+
+    @Transactional
+    public void deleteBookingById(Integer id){
+        bookingRepository.deleteById(id);
     }
 
 }

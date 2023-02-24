@@ -14,6 +14,7 @@
             <th>Fecha de inicio </th>
             <th>Fecha de fin</th>
             <th>Mascota</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -27,6 +28,11 @@
                 </td>
                 <td>
                     <c:out value="${booking.pet.getName()}"/>
+                </td>
+                <td>
+                    <a href="/booking/${booking.id}/delete">   
+                        <span class="glyphicon glyphicon-trash" aria-hidden="true" style=" margin-left: 20%"></span>     
+                    </a>
                 </td>
             </tr>
         </c:forEach>

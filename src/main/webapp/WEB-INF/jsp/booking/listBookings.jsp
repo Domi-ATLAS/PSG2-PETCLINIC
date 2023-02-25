@@ -6,7 +6,7 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="bookings">
-    <h2>Listado de mascotas de <c:out value = "${principal}"/></h2>
+    <h2>Listado de reservas de <c:out value = "${principal}"/></h2>
 
     <table id="ownersTable" class="table table-striped">
         <thead style="background-color: lightgray;">
@@ -14,7 +14,7 @@
             <th>Fecha de inicio </th>
             <th>Fecha de fin</th>
             <th>Mascota</th>
-            <th></th>
+            <th>&iquest;Desea cancelar la reserva?</th>
         </tr>
         </thead>
         <tbody>

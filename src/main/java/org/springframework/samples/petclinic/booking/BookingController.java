@@ -91,7 +91,6 @@ public class BookingController {
         if(booking != null){
             bookingService.deleteBookingById(id);
         }
-        return new ModelAndView(LIST_BOOKINGS);
-
+        return new ModelAndView("redirect:/booking/list");
     }
 }

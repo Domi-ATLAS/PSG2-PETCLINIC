@@ -16,11 +16,15 @@
 package org.springframework.samples.petclinic.owner;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.pet.Pet;
+import org.springframework.samples.petclinic.pet.PetService;
+import org.springframework.samples.petclinic.pet.Visit;
 import org.springframework.samples.petclinic.user.AuthoritiesService;
 import org.springframework.samples.petclinic.user.UserService;
 import org.springframework.stereotype.Controller;
@@ -45,10 +49,12 @@ public class OwnerController {
 	private static final String VIEWS_OWNER_CREATE_OR_UPDATE_FORM = "owners/createOrUpdateOwnerForm";
 
 	private final OwnerService ownerService;
+	private final PetService petService;
 
 	@Autowired
-	public OwnerController(OwnerService ownerService, UserService userService, AuthoritiesService authoritiesService) {
+	public OwnerController(OwnerService ownerService, UserService userService, AuthoritiesService authoritiesService,PetService petService) {
 		this.ownerService = ownerService;
+		this.petService=petService;
 	}
 
 	@InitBinder
@@ -140,5 +146,27 @@ public class OwnerController {
 		mav.addObject(this.ownerService.findOwnerById(ownerId));
 		return mav;
 	}
+
+
+	@GetMapping("/owners/{ownerId}/delete")
+	public ModelAndView deleteOwner(@PathVariable("ownerId") int ownerId){
+
+		Owner owner= ownerService.findOwnerById(ownerId);
+		List<Pet> petsList =owner.getPets();
+		List<Visit> listVisit= petService.obteinVisits(petsList);
+		for(int e=0;e<listVisit.size();e++){
+			petService.deleteVisit(listVisit.get(e).getId());
+		 } 
+
+		for (int i=0;i<petsList.size();i++){
+			Pet pet= petsList.get(i);
+			petService.deletePet(pet.getId());
+		}
+		ownerService.deleteOwner(owner.getId());
+		return new ModelAndView("redirect:/owners");
+
+	}
+
+
 
 }

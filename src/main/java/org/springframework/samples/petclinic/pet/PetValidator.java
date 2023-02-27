@@ -39,7 +39,7 @@ public class PetValidator implements Validator {
 		String name = pet.getName();
 		// name validation
 		if (!StringUtils.hasLength(name) || name.length()>50 || name.length()<3) {
-			errors.rejectValue("name", REQUIRED+" and between 3 and 50 characters", REQUIRED+" and between 3 and 50 character");
+			errors.rejectValue("name", REQUIRED +" y entre 3 y 50 caracteres", REQUIRED +" y entre 3 y 50 caracteres");
 		}
 
 		// type validation

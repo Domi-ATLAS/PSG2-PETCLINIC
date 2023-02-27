@@ -50,11 +50,15 @@ public class OwnerController {
 
 	private final OwnerService ownerService;
 	private final PetService petService;
+	private final UserService userService;
+	private final AuthoritiesService authoritiesService;
 
 	@Autowired
 	public OwnerController(OwnerService ownerService, UserService userService, AuthoritiesService authoritiesService,PetService petService) {
 		this.ownerService = ownerService;
 		this.petService=petService;
+		this.userService=userService;
+		this.authoritiesService=authoritiesService;
 	}
 
 	@InitBinder

@@ -4,6 +4,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>  
 
 <petclinic:layout pageName="owners">
 
@@ -28,7 +29,7 @@
             <td><c:out value="${owner.telephone}"/></td>
         </tr>
     </table>
-
+    <sec:authorize access='hasAuthority("admin")'>  
     <spring:url value="{ownerId}/delete" var="editUrl">
         <spring:param name="ownerId" value="${owner.id}"/>
     </spring:url>
@@ -38,12 +39,14 @@
         <spring:param name="ownerId" value="${owner.id}"/>
     </spring:url>
     <a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Editar Propietario</a>
+    
 
     <spring:url value="{ownerId}/pets/new" var="addUrl">
         <spring:param name="ownerId" value="${owner.id}"/>
     </spring:url>
     <a href="${fn:escapeXml(addUrl)}" class="btn btn-default">Añadir Nueva Mascota</a>
-
+    </sec:authorize>
+    
     <br/>
     <br/>
     <br/>
@@ -78,6 +81,7 @@
                                 
                             </tr>
                         </c:forEach>
+                        <sec:authorize access='hasAuthority("admin")'>  
                         <tr>
                             <td>
                                 <spring:url value="/owners/{ownerId}/pets/{petId}/delete" var="petUrl">
@@ -101,6 +105,7 @@
                                 <a href="${fn:escapeXml(visitUrl)}">Añadir Visita</a>
                             </td>
                         </tr>
+                        </sec:authorize>
                     </table>
                 </td>
             </tr>

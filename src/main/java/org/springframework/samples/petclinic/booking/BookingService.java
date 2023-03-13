@@ -29,11 +29,30 @@ public class BookingService {
                 throw new BadDateException();
             }else if(booking.getFinishDate().isBefore(LocalDate.now())){
                 throw new BadDateException();
+            }else{
+                for(Booking existingBooking: getAllBookings()){
+                    if(booking.getPet().equals(existingBooking.getPet())){
+                        if((booking.getStartDate().isBefore(existingBooking.getStartDate()) && 
+                        booking.getFinishDate().isAfter(existingBooking.getFinishDate())) ||
+                        (booking.getStartDate().isEqual(existingBooking.getStartDate()) && 
+                        booking.getFinishDate().isEqual(existingBooking.getFinishDate())) ||
+                        (booking.getStartDate().isAfter(existingBooking.getStartDate()) && 
+                        booking.getFinishDate().isBefore(existingBooking.getFinishDate())) ||
+                        (booking.getStartDate().isBefore(existingBooking.getStartDate()) && 
+                        booking.getFinishDate().isEqual(existingBooking.getFinishDate())) ||
+                        (booking.getStartDate().isEqual(existingBooking.getStartDate()) && 
+                        booking.getFinishDate().isAfter(existingBooking.getFinishDate())) ||
+                        (booking.getStartDate().isBefore(existingBooking.getStartDate()) && 
+                        booking.getFinishDate().isAfter(existingBooking.getStartDate()))){
+                            throw new BadDateException();
+                        }
+                    }
+                }
             }
-
         }catch(Exception e){
             throw new BadDateException();
         }
+        
         return bookingRepository.save(booking);
     }
 

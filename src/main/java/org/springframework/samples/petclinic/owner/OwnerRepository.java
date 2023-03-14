@@ -60,6 +60,9 @@ public interface OwnerRepository extends Repository<Owner, Integer> {
 	@Query("SELECT owner FROM Owner owner left join fetch owner.pets WHERE owner.id =:id")
 	public Owner findById(@Param("id") int id);
 
+	@Query("SELECT owner FROM Owner owner left join fetch owner.pets WHERE owner.user.username =:username")
+	public Owner findByUsername(@Param("username") String username);
+
 	@Modifying
     @Query(value="DELETE FROM owners WHERE id = ?1",nativeQuery = true)
     void deleteOwner(@Param("id") Integer id);

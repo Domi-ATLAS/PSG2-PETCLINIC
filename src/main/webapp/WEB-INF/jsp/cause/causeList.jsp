@@ -12,9 +12,10 @@
     <table id="causesList" class="table table-striped">
         <thead style="background-color: lightgray;">
         <tr>
-            <th style="background-color: lightgray;width: 150px;">Name</th>
-            <th style="background-color: lightgray; width: 200px;">Description</th>
-            <th style="background-color: lightgray;">Budget Target</th>
+            <th style="width: 150px;">Name</th>
+            <th style=" width: 200px;">Achieved Budget</th>
+            <th>Budget Target</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>

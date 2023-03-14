@@ -158,7 +158,7 @@ public class VetController {
     }
 
     @PostMapping("/vets/new")
-    public ModelAndView saveNewLogro(@Valid Vet vet, BindingResult br){
+    public ModelAndView saveNewVet(@Valid Vet vet, BindingResult br){
         if(br.hasErrors()){
             return new ModelAndView("vets/createVet",br.getModel());
         }

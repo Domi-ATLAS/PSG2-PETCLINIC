@@ -10,31 +10,31 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class AdoptionRequestService {
 
-    private AdoptionRequestRepository adoptionRequestRepositorio;
+    private AdoptionRequestRepository adoptionRequestRepository;
 
     @Autowired
     public AdoptionRequestService(AdoptionRequestRepository repo){
-        this.adoptionRequestRepositorio = repo;
+        this.adoptionRequestRepository = repo;
     }
 
     @Transactional(readOnly = true)
     public List<AdoptionRequest> getAll(){
-        return adoptionRequestRepositorio.findAll();
+        return adoptionRequestRepository.findAll();
     }
 
     @Transactional(readOnly = true)
     public Optional<AdoptionRequest> getById(Integer id){
-        return adoptionRequestRepositorio.findById(id);
+        return adoptionRequestRepository.findById(id);
     }
     
     @Transactional
     public void deleteAdoptionRequest(AdoptionRequest ar){
-        adoptionRequestRepositorio.delete(ar);
+        adoptionRequestRepository.delete(ar);
     }
 
     @Transactional
     public void saveAdoptionRequest(AdoptionRequest ar){
-        adoptionRequestRepositorio.save(ar);
+        adoptionRequestRepository.save(ar);
     }
 
     

@@ -1,5 +1,7 @@
 package org.springframework.samples.petclinic.donation;
 
+import java.time.LocalDate;
+
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.Min;
@@ -25,5 +27,12 @@ public class Donation extends BaseEntity{
 
     @NotNull
     private String message;
+
+    @NotNull
+    private LocalDate date;
+
+    public Donation(){
+        this.date = LocalDate.now();
+    }
     
 }

@@ -11,24 +11,25 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
-<petclinic:layout pageName="bookings">
+<petclinic:layout pageName="adoptionRequest">
    
     <jsp:body>
-        <h2>Hacer solicitud de adopcion</h2>
+        <h2>Hacer solicitud de adopción</h2>
 
-        <form:form modelAttribute="adoptionRequest" class="form-horizontal" id="add-adoptionRequest-form">
+        <form:form modelAttribute="adoptinoRequest" class="form-horizontal" id="add-adoptionRequest-form">
             <div class="form-group has-feedback">
-                <input type="hidden" name="id" value="${request.id}"/>
-                <input name="mensaje"/>
-
-                <c:forEach items="${pets}" var="pet">
-                    <tr>
-                        <td>${pet.name}</td>
-                        <td>
-                            <input type="radio" name="mascota" value="${pet.id}" checked/></br>
-                        </td>
-                    </tr>
-                </c:forEach>
+                <input type="hidden" name="id" value="${adoptinoRequest.id}"/>
+                <petclinic:inputField label="&iquest;Por qu&eacute; quiere que adopten su mascota? &iquest;Y c&oacute;mo deben tratarla?" name="message"/>
+                <div>
+                    <c:forEach items="${pets}" var="pet">
+                        <tr>
+                            <td>${pet.name}</td>
+                            <td>
+                                <input type="radio" name="pet" value="${pet.id}" checked/></br>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </div>
                 <tr>
                     <td>
                         <c:if test = "${!pets.isEmpty()}">

@@ -13,26 +13,31 @@ import org.springframework.stereotype.Service;
 public class AdoptionResponseService {
 
 
-    private AdoptionResponseRepository adoptionApplicationRepository;
+    private AdoptionResponseRepository adoptionResponseRepository;
 
     @Autowired
     public AdoptionResponseService(AdoptionResponseRepository br){
-        this.adoptionApplicationRepository=br;
+        this.adoptionResponseRepository=br;
     }
 
     @Transactional(readOnly = true)
     public List<AdoptionResponse> getAllApplications(){
-        return (List<AdoptionResponse>) adoptionApplicationRepository.findAll();
+        return (List<AdoptionResponse>) adoptionResponseRepository.findAll();
     }
 
       @Transactional(readOnly = true)
       public Optional<AdoptionResponse> getApplicationById(Integer id){
-        return adoptionApplicationRepository.findById(id);
+        return adoptionResponseRepository.findById(id);
       }
 
       @Transactional(readOnly = true)
       public void deleteApplicationById(Integer id){
-        adoptionApplicationRepository.deleteById(id);
+        adoptionResponseRepository.deleteById(id);
+      }
+
+      @Transactional
+      public void save(AdoptionResponse ar){
+        adoptionResponseRepository.save(ar);
       }
 
 

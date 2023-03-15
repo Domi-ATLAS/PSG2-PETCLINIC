@@ -8,9 +8,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.cause.Cause;
 import org.springframework.samples.petclinic.cause.CauseService;
-import org.springframework.samples.petclinic.owner.Owner;
-import org.springframework.samples.petclinic.owner.OwnerService;
-import org.springframework.samples.petclinic.user.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,26 +20,22 @@ import org.springframework.web.servlet.ModelAndView;
 public class DonationController {
 
     private DonationService donationService;
-    private OwnerService ownerService;
     private CauseService causeService;
-    private UserService userService;
 
     @Autowired
-    public DonationController(DonationService service, OwnerService ownerService, CauseService causeService, UserService userService){
+    public DonationController(DonationService service, CauseService causeService){
         this.donationService = service;
-        this.ownerService = ownerService;
         this.causeService = causeService;
-        this.userService = userService;
     }
     
     @GetMapping("/new")
     public ModelAndView createCause(Principal principal){
-        Owner owner = ownerService.findOwnerByUser(userService.findUser(principal.getName()).get());
+        //Owner owner = ownerService.findOwnerByUser(userService.findUser(principal.getName()).get());
         Donation donation = new Donation();
         List<Cause> causes = causeService.getAllCauses();
         ModelAndView result = new ModelAndView("donation/createDonation");
         result.addObject("donation", donation);
-        result.addObject("owner", owner);
+        //result.addObject("owner", owner);
         result.addObject("causes", causes);
         return result;
     }

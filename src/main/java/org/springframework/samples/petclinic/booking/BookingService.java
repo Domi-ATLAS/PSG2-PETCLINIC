@@ -31,21 +31,19 @@ public class BookingService {
                 throw new BadDateException();
             }else{
                 for(Booking existingBooking: getAllBookings()){
-                    if(booking.getPet().equals(existingBooking.getPet())){
-                        if((booking.getStartDate().isBefore(existingBooking.getStartDate()) && 
-                        booking.getFinishDate().isAfter(existingBooking.getFinishDate())) ||
-                        (booking.getStartDate().isEqual(existingBooking.getStartDate()) && 
-                        booking.getFinishDate().isEqual(existingBooking.getFinishDate())) ||
-                        (booking.getStartDate().isAfter(existingBooking.getStartDate()) && 
-                        booking.getFinishDate().isBefore(existingBooking.getFinishDate())) ||
-                        (booking.getStartDate().isBefore(existingBooking.getStartDate()) && 
-                        booking.getFinishDate().isEqual(existingBooking.getFinishDate())) ||
-                        (booking.getStartDate().isEqual(existingBooking.getStartDate()) && 
-                        booking.getFinishDate().isAfter(existingBooking.getFinishDate())) ||
-                        (booking.getStartDate().isBefore(existingBooking.getStartDate()) && 
-                        booking.getFinishDate().isAfter(existingBooking.getStartDate()))){
-                            throw new BadDateException();
-                        }
+                    if(existingBooking.getStartDate().isBefore(booking.getStartDate()) && 
+                    existingBooking.getFinishDate().isAfter(booking.getFinishDate()) ||
+                    existingBooking.getStartDate().isAfter(booking.getStartDate()) && 
+                    existingBooking.getFinishDate().isAfter(booking.getFinishDate()) && 
+                    existingBooking.getStartDate().isBefore(booking.getFinishDate()) || 
+                    existingBooking.getStartDate().isBefore(booking.getStartDate()) && 
+                    existingBooking.getFinishDate().isBefore(booking.getFinishDate()) && 
+                    existingBooking.getFinishDate().isAfter(booking.getStartDate()) ||
+                    existingBooking.getStartDate().isAfter(booking.getStartDate()) && 
+                    existingBooking.getFinishDate().isBefore(booking.getFinishDate()) ||
+                    existingBooking.getStartDate().isEqual(booking.getStartDate()) ||
+                    existingBooking.getFinishDate().isEqual(booking.getFinishDate())){
+                        throw new BadDateException();    
                     }
                 }
             }

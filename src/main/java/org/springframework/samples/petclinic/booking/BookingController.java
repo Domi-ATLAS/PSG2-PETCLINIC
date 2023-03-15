@@ -70,25 +70,8 @@ public class BookingController {
         }else if(booking.getFinishDate().isBefore(LocalDate.now())){
             mesage ="La fecha final de la reserva no puede ser anterior a la fecha actual";
         }else{
-            for(Booking existingBooking: bookingService.getAllBookings()){
-                if(booking.getPet().equals(existingBooking.getPet())){
-                    if ((booking.getStartDate().isBefore(existingBooking.getStartDate()) && 
-                    booking.getFinishDate().isAfter(existingBooking.getFinishDate())) ||
-                    (booking.getStartDate().isEqual(existingBooking.getStartDate()) && 
-                    booking.getFinishDate().isEqual(existingBooking.getFinishDate())) ||
-                    (booking.getStartDate().isAfter(existingBooking.getStartDate()) && 
-                    booking.getFinishDate().isBefore(existingBooking.getFinishDate())) ||
-                    (booking.getStartDate().isBefore(existingBooking.getStartDate()) && 
-                    booking.getFinishDate().isEqual(existingBooking.getFinishDate())) ||
-                    (booking.getStartDate().isEqual(existingBooking.getStartDate()) && 
-                    booking.getFinishDate().isAfter(existingBooking.getFinishDate())) ||
-                    (booking.getStartDate().isBefore(existingBooking.getStartDate()) && 
-                    booking.getFinishDate().isAfter(existingBooking.getStartDate()))) {
-                        mesage = "Ya existe reserva";
-                        break;
-                    }
-                }
-            }
+            mesage = "Ya existe una reserva para la mascota " + booking.getPet().getName() + " con fecha entre " + booking.getStartDate()
+            + " y " + booking.getFinishDate();
         }
         return mesage;
     }

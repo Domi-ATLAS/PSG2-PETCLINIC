@@ -23,7 +23,7 @@ public class DonationService {
 
     @Transactional(readOnly = true)
     public List<Donation> getAllDonations(){
-        return donationRepo.findAllDonation();
+        return (List<Donation>) donationRepo.findAll();
     } 
 
     @Transactional(readOnly = true)

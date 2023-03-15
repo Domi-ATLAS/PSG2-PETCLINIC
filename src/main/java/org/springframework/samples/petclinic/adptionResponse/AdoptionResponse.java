@@ -14,7 +14,7 @@ import lombok.Setter;
 @Getter
 @Setter
 
-public class AdoptionApplication extends BaseEntity{
+public class AdoptionResponse extends BaseEntity{
 
     //(adoption applications will have a description of how the applicant will take care of the pet). 
     //If the original owner approves the application, the pet will be transferred to the applicant and he/she will 

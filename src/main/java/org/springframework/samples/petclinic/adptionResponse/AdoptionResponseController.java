@@ -4,12 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 @Controller
-public class AdoptionApplicationController {
+public class AdoptionResponseController {
     
-    AdoptionApplicationService adoptionApplicationService;
+    AdoptionResponseService adoptionApplicationService;
     
     @Autowired
-    public AdoptionApplicationController(AdoptionApplicationService adoptionApplicationService){
+    public AdoptionResponseController(AdoptionResponseService adoptionApplicationService){
         this.adoptionApplicationService = adoptionApplicationService;
         
     }

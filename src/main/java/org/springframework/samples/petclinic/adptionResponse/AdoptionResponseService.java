@@ -10,23 +10,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AdoptionApplicationService {
+public class AdoptionResponseService {
 
 
-    private AdoptionApplicationRepository adoptionApplicationRepository;
+    private AdoptionResponseRepository adoptionApplicationRepository;
 
     @Autowired
-    public AdoptionApplicationService(AdoptionApplicationRepository br){
+    public AdoptionResponseService(AdoptionResponseRepository br){
         this.adoptionApplicationRepository=br;
     }
 
     @Transactional(readOnly = true)
-    public List<AdoptionApplication> getAllApplications(){
-        return (List<AdoptionApplication>) adoptionApplicationRepository.findAll();
+    public List<AdoptionResponse> getAllApplications(){
+        return (List<AdoptionResponse>) adoptionApplicationRepository.findAll();
     }
 
       @Transactional(readOnly = true)
-      public Optional<AdoptionApplication> getApplicationById(Integer id){
+      public Optional<AdoptionResponse> getApplicationById(Integer id){
         return adoptionApplicationRepository.findById(id);
       }
 

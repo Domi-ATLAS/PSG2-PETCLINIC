@@ -25,7 +25,7 @@ public class AdoptionRequest extends BaseEntity{
     private Owner autor;
 
     @NotNull
-    private String mensaje;
+    private String menssage;
 
     //@OneToMany
     //private List<AdoptionResponse> respuestasDeAdopcion;
@@ -34,6 +34,6 @@ public class AdoptionRequest extends BaseEntity{
     //private AdoptionResponse respuestaPeticion;
 
     @OneToOne(optional = false)
-    private Pet mascota;
+    private Pet pet;
     
 }

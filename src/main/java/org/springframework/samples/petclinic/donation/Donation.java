@@ -20,13 +20,13 @@ public class Donation extends BaseEntity{
 
     @Min(1)
     @NotNull
-    private Double cantidad;
+    private Double amount;
 
     @ManyToOne(optional = true)
-    private Owner donante;
+    private Owner donor;
 
     @NotNull
-    private String mensaje;
+    private String message;
 
     @NotNull
     private LocalDate date;
@@ -34,6 +34,5 @@ public class Donation extends BaseEntity{
     public Donation(){
         this.date = LocalDate.now();
     }
-
     
 }

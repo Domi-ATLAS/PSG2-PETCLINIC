@@ -25,7 +25,7 @@
                     <tr>
                         <td>${pet.name}</td>
                         <td>
-                            <input type="radio" name="pet" value="${pet.id}" checked/></br>
+                            <input type="radio" name="mascota" value="${pet.id}" checked/></br>
                         </td>
                     </tr>
                 </c:forEach>

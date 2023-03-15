@@ -48,8 +48,8 @@ public class OwnerService {
 	}	
 
 	@Transactional(readOnly = true)
-	public Owner findOwnerByUser(String username){
-		return ownerRepository.findByUsername(username);	
+	public Owner findOwnerByUser(User user){
+		return ownerRepository.findByUser(user);	
 	}
 
 	@Transactional(readOnly = true)

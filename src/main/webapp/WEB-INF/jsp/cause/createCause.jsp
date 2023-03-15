@@ -9,8 +9,7 @@
         <div style="text-align: center; ">
             <h2 style = "font-size: 40px; margin-bottom: 3%;";>Create Cause</h2>
         </div>
-        <form:form modelAttribute="cause"
-                   class="form-horizontal">
+        <form:form modelAttribute="cause" class="form-horizontal">
             <input type="hidden" name="id" value="${cause.id}"/>
             <div class="form-group has-feedback">                
                 <petclinic:inputField label="Cause name:" name="name"/>

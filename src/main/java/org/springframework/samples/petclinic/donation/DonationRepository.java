@@ -11,7 +11,7 @@ import org.springframework.samples.petclinic.owner.Owner;
 @Repository
 public interface DonationRepository extends CrudRepository<Donation,Integer>{
     
-    @Query("SELECT o FROM Donation o WHERE o.donante = ?1")
+    @Query("SELECT o FROM Donation o WHERE o.donor = ?1")
     List<Donation> findByOwner(Owner o);
     
 }

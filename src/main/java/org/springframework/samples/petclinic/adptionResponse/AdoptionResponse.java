@@ -13,12 +13,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-
 public class AdoptionResponse extends BaseEntity{
-
-    //(adoption applications will have a description of how the applicant will take care of the pet). 
-    //If the original owner approves the application, the pet will be transferred to the applicant and he/she will 
-    //be the new owner of the pet.
 
     public String description;
     

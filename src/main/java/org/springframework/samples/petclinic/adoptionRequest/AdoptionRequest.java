@@ -1,18 +1,14 @@
 package org.springframework.samples.petclinic.adoptionRequest;
-
 import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
-
-import org.hibernate.annotations.ManyToAny;
+import org.springframework.samples.petclinic.adptionResponse.AdoptionResponse;
 import org.springframework.samples.petclinic.model.BaseEntity;
 import org.springframework.samples.petclinic.owner.Owner;
 import org.springframework.samples.petclinic.pet.Pet;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,16 +18,16 @@ import lombok.Setter;
 public class AdoptionRequest extends BaseEntity{
 
     @ManyToOne
-    private Owner autor;
+    private Owner author;
 
     @NotNull
-    private String menssage;
+    private String message;
 
-    //@OneToMany
-    //private List<AdoptionResponse> respuestasDeAdopcion;
+    @OneToMany
+    private List<AdoptionResponse> responses;
 
-    //@OneToOne(optional = true)
-    //private AdoptionResponse respuestaPeticion;
+    @OneToOne(optional = true)
+    private AdoptionResponse selectedResponse;
 
     @OneToOne(optional = false)
     private Pet pet;

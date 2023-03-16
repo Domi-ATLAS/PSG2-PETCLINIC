@@ -29,7 +29,9 @@ public class AdoptionRequest extends BaseEntity{
     @OneToOne(optional = true)
     private AdoptionResponse selectedResponse;
 
-    @OneToOne(optional = false)
+    @ManyToOne(optional = false)
     private Pet pet;
+
+    private Boolean avalible;
     
 }

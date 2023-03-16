@@ -75,3 +75,8 @@ INSERT INTO donation (id, amount, message, donor_id, date) VALUES (1, 300.0, 'Pa
 
 INSERT INTO cause_donations (cause_id, donations_id) VALUES (1,1);
 
+INSERT INTO adoption_request(id,message,author_id,pet_id,selected_response_id) VALUES(1,'Hola',3,3,null);
+
+INSERT INTO adoption_response(id,description,owner_id) VALUES(1,'Hola',11);
+
+INSERT INTO adoption_request_responses(adoption_request_id,responses_id) VALUES(1,1);

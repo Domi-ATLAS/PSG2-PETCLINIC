@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class AdoptionRequestController {
@@ -30,23 +32,34 @@ public class AdoptionRequestController {
 
     @GetMapping(value="adoptionRequest/new")
     public ModelAndView initCreationAdoptionRequestForm(Principal principal){
-
         AdoptionRequest request = new AdoptionRequest();
         ModelAndView res = new ModelAndView(CREATE_ADOPTION_REQUEST);
-        List<Pet> petsFiltered = petService.getPetsByOwnerUsername(principal.getName());
+        List<Pet> petByowner = petService.getPetsByOwnerUsername(principal.getName());
+        List<Pet> petsFiltered = filterPestToCreateAdoptionRequest(petByowner, principal.getName());
         res.addObject("pets", petsFiltered);
         res.addObject("adoptinoRequest", request);
         return res;
-    
+    }
+
+    public List<Pet> filterPestToCreateAdoptionRequest(List<Pet> pets,String principal){
+        List<AdoptionRequest> adoptionRequests= adoptionRequestService.getAll();
+        for(int i = 0;i<pets.size();i++ ){
+            Pet p = pets.get(i);
+            Boolean aux = adoptionRequests.stream().anyMatch(x->x.getPet().equals(p) && x.getAuthor().equals(p.getOwner()));
+            if(aux){
+                pets.remove(p);
+            }
+        }
+        return pets;
     }
 
 
     @PostMapping("adoptionRequest/new")
     public ModelAndView saveBooking(@Valid AdoptionRequest adoptionRequest,BindingResult br,Principal principal){
         ModelAndView res = new ModelAndView(CREATE_ADOPTION_REQUEST,br.getModel());
-        List<Pet> petsFiltered = petService.getPetsByOwnerUsername(principal.getName());
-        res.addObject("pets",petsFiltered);
         if(br.hasErrors()){
+            List<Pet> petByowner = petService.getPetsByOwnerUsername(principal.getName());
+            List<Pet> petsFiltered = filterPestToCreateAdoptionRequest(petByowner, principal.getName());
             res.addObject("pets",petsFiltered);
         }else{
             adoptionRequest.setAuthor(adoptionRequest.getPet().getOwner());        
@@ -60,7 +73,9 @@ public class AdoptionRequestController {
     public ModelAndView showAdoptionRequests(Principal principal){
         ModelAndView res = new ModelAndView(LIST_ADOPTION_REQUEST);
         List<AdoptionRequest> adoptionRequests = adoptionRequestService.getAll();
-        res.addObject("adoptionRequests", adoptionRequests);
+        List<AdoptionRequest> adoptionRequestsFiltered = adoptionRequests.stream().filter(x->x.getAvalible()==null || x.getAvalible() == true).collect(Collectors.toList());
+        res.addObject("adoptionRequests", adoptionRequestsFiltered);
+        res.addObject("principal", principal.getName());
         return res;
     }
 
@@ -68,7 +83,18 @@ public class AdoptionRequestController {
     public ModelAndView showAdoptionRequests(@PathVariable("id") Integer id,Principal principal){
         ModelAndView res = new ModelAndView(SHOW_ADOPTION_REQUEST);
         AdoptionRequest adoptionRequest = adoptionRequestService.getById(id).orElse(null);
+        res.addObject("principal", principal.getName());
         res.addObject("adoptionRequest", adoptionRequest);
+        return res;
+    }
+
+    @GetMapping(value ="adoptionRequest/delete/{id}")
+    public ModelAndView deleteAdoptionRequest(@PathVariable("id") Integer id){
+        ModelAndView res = new ModelAndView("redirect:/adoptionRequest/list");
+        AdoptionRequest adoptionRequest = adoptionRequestService.getById(id).orElse(null);
+        if(adoptionRequest !=null){
+            adoptionRequestService.deleteAdoptionRequest(adoptionRequest);
+        }
         return res;
     }
 

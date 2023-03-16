@@ -3,7 +3,14 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
+<%@ page session="false" trimDirectiveWhitespaces="true" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
+
 
 <petclinic:layout pageName="adoptionRequest">
     <div style="font-size: 20px;color: black;">
@@ -18,9 +25,16 @@
         </div>
     </div>
 
+    <form:form modelAttribute="adoptionRequest" class="form-horizontal" id="add-adoptionRequest-form">
+                <input type="hidden" name="id" value="${adoptionRequest.id}"/>
+                <input type="hidden" name="message" value="${adoptionRequest.message}"/>
+                <input type="hidden" name="author" value="${adoptionRequest.author.id}"/>
+                          
+
     <table id="adoptionRequestTable" class="table table-striped">
         <thead style="background-color: lightgray;">
             <tr>
+                <th>Seleccionar</th>
                 <th>Autor </th>
                 <th>Mensaje</th>
             </tr>
@@ -29,31 +43,21 @@
         <c:forEach items="${adoptionRequest.responses}" var="adoptionResponse">
             <tr>
                 <td>
+                    <input type="radio" name ="selectedResponse"value="${adoptionResponse.id}" checked/>
+                </td>
+                <td>
                     <c:out value="${adoptionResponse.owner.user.username}"/>
                 </td>
                 <td>
                     <c:out value="${adoptionResponse.description}"/>
                 </td>
-                <c:if test="${adoptionResponse.owner.user.username == principal}">
-                    <td>
-                        <a href="/adoptionResponse/delete/${adoptionRequest.id}/${adoptionResponse.id}">   
-                            <span class="glyphicon glyphicon-trash" aria-hidden="true" style=" margin-left: 20%"></span>     
-                        </a>
-                    </td>
-                </c:if>
             </tr>
         </c:forEach>
         </tbody>        
     </table>
-
-    <c:if test = "${adoptionRequest.author.user.username != principal}">
-        <spring:url value="/adoptionResponse/new/${adoptionRequest.id}" htmlEscape="true" var="newAR"/>
-        <a class="btn btn-default" href="${newAR}">Enviar respuesta</a>
-    </c:if>
-
     <c:if test = "${adoptionRequest.author.user.username == principal}">
-        <spring:url value="/adoptionResponse/${adoptionRequest.id}/resp" htmlEscape="true" var="selectAR"/>
-        <a class="btn btn-default" href="${selectAR}">Escoger respuesta</a>
+        <button class="btn btn-default" type="submit">Escoger nuevo due&ntilde;o para mi mascota</button> 
     </c:if>
-
+</form:form>   
+    
 </petclinic:layout>

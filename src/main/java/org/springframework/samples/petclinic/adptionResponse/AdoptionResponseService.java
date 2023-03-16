@@ -30,7 +30,7 @@ public class AdoptionResponseService {
         return adoptionResponseRepository.findById(id);
       }
 
-      @Transactional(readOnly = true)
+      @Transactional()
       public void deleteApplicationById(Integer id){
         adoptionResponseRepository.deleteById(id);
       }
@@ -40,6 +40,8 @@ public class AdoptionResponseService {
         adoptionResponseRepository.save(ar);
       }
 
-
-    
+      @Transactional(readOnly = true)
+      public  Optional<AdoptionResponse> getById(Integer id){
+        return adoptionResponseRepository.findById(id);
+      }
 }

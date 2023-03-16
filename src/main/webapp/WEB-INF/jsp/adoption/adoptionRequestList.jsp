@@ -31,6 +31,13 @@
                 <td>
                     <a href="/adoptionRequest/${adoptionRequest.id}">Respuestas</a>
                 </td>
+                <c:if test="${adoptionRequest.author.user.username == principal}">
+                    <td>
+                        <a href="/adoptionRequest/delete/${adoptionRequest.id}">   
+                            <span class="glyphicon glyphicon-trash" aria-hidden="true" style=" margin-left: 20%"></span>     
+                        </a>
+                    </td>
+                </c:if>
             </tr>
         </c:forEach>
         </tbody>        

@@ -40,10 +40,22 @@
 					<span>Veterinarios</span>
 				</petclinic:menuItem>
 
+				<petclinic:menuItem active="${name eq 'owners'}" url="adoptionRequest/new"
+					title="Adoption">
+					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+					<span>Adoption Request</span>
+				</petclinic:menuItem>
+
 				<petclinic:menuItem active="${name eq 'bookings'}" url="/booking/list"
 					title="reservas">
 					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
 					<span>Reservas</span>
+				</petclinic:menuItem>
+
+				<petclinic:menuItem active="${name eq 'adoptionRequest'}" url="/adoptionRequest/list"
+					title="Adopciones">
+					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+					<span>Adopciones</span>
 				</petclinic:menuItem>
 
 				<petclinic:menuItem active="${name eq 'error'}" url="/oups"

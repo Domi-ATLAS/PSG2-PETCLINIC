@@ -27,7 +27,7 @@ public class DonationController {
     private CauseService causeService;
 
     @Autowired
-    public DonationController(DonationService service, OwnerService ownerService, CauseService causeService, UserService userService){
+    public DonationController(DonationService service, CauseService causeService){
         this.donationService = service;
         this.causeService = causeService;
     }

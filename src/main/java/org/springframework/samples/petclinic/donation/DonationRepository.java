@@ -8,4 +8,5 @@ import org.springframework.data.repository.CrudRepository;
 @Repository
 public interface DonationRepository extends CrudRepository<Donation,Integer>{
     
+
 }

@@ -26,11 +26,6 @@ public class DonationService {
         return (List<Donation>) donationRepo.findAll();
     } 
 
-    @Transactional(readOnly = true)
-    public List<Donation> getAllDonationsByOwner(Owner o){
-        return donationRepo.findByOwner(o);
-    }
-
     @Transactional
     public Optional<Donation> getDonatioById(Integer id){
         return donationRepo.findById(id);

@@ -71,12 +71,13 @@ INSERT INTO visits(id,pet_id,visit_date,description) VALUES (4, 7, '2013-01-04',
 INSERT INTO cause(id, name, description, budget_target, non_profit_organization, is_closed) 
 VALUES (1, 'CausaEjemplo1', 'Para recaudar dinero para escuela', 320.0, 'ZarrínONG', FALSE);
 
-INSERT INTO donation (id, amount, message, donor_id, date) VALUES (1, 300.0, 'Para la PlayStation5', 2, '2023-01-05');
+INSERT INTO donation (id, amount, message, donor_name, date) VALUES (1, 300.0, 'Para la PlayStation5', 'Paquito el chocolatero', '2023-01-05');
 
-INSERT INTO cause_donations (cause_id, donations_id) VALUES (1,1);
+INSERT INTO cause_donations (cause_id, donations_id) VALUES (1,1)
 
 INSERT INTO adoption_request(id,message,author_id,pet_id,selected_response_id) VALUES(1,'Hola',3,3,null);
 
 INSERT INTO adoption_response(id,description,owner_id) VALUES(1,'Hola',11);
 
 INSERT INTO adoption_request_responses(adoption_request_id,responses_id) VALUES(1,1);
+

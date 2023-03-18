@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,5 +40,18 @@ public class CauseService {
         causeRepository.deleteById(id);
     }
 
+    @Transactional
+
+    public void editCause(Cause c) throws DataAccessException{
+        Cause toUpdate = causeRepository.findById(c.getId()).get();
+        toUpdate.setId(c.getId());
+        toUpdate.setBudgetTarget(c.getBudgetTarget());
+        toUpdate.setDescription(c.getDescription());
+        toUpdate.setDonations(c.getDonations());
+        toUpdate.setIsClosed(c.getIsClosed());
+        toUpdate.setName(c.getName());
+        toUpdate.setNonProfitOrganization(c.getNonProfitOrganization());
+        causeRepository.save(toUpdate);
+    }
     
 }

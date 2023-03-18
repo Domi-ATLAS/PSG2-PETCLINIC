@@ -7,14 +7,14 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="causes">
-    <h2>Causes</h2>
+    <h2>Causas</h2>
 
     <table id="causesList" class="table table-striped">
         <thead style="background-color: lightgray;">
         <tr>
-            <th style="width: 150px;">Name</th>
-            <th style=" width: 200px;">Achieved Budget</th>
-            <th>Budget Target</th>
+            <th style="width: 150px;">Nombre</th>
+            <th style=" width: 200px;">Cantidad conseguida</th>
+            <th>Cantidad esperada</th>
             <th></th>
         </tr>
         </thead>
@@ -32,9 +32,9 @@
                 </td>
                 <td>
                     <div>
-                        <a class="btn btn-default" style="font-size: 15px; font-family: sans-serif; margin-left: 75%; margin-right: 10%;"  href="/causes/details/${cause.id}">Details</a>
+                        <a class="btn btn-default" style="font-size: 15px; font-family: sans-serif; margin-left: 75%; margin-right: 10%;"  href="/causes/details/${cause.id}">Detalles</a>
                         <c:if test="${!cause.isClosed}">
-                            <a class="btn btn-default" style="font-size: 15px; font-family: sans-serif; margin-left: 75%; margin-right: 10%;"  href="/donation/new/${cause.id}">Donate</a>
+                            <a class="btn btn-default" style="font-size: 15px; font-family: sans-serif; margin-left: 75%; margin-right: 10%;"  href="/donation/new/${cause.id}">Donar</a>
                         </c:if>
                     </div>
                 </td>
@@ -43,7 +43,7 @@
         </tbody>
     </table>
     <div style="position: relative;">
-        <a class="btn btn-default" style="font-size: 15px; font-family: sans-serif; margin-left: 75%; margin-right: 10%;"  href="/causes/new">Create a new cause</a>
+        <a class="btn btn-default" style="font-size: 15px; font-family: sans-serif; margin-left: 75%; margin-right: 10%;"  href="/causes/new">Crear nueva causa</a>
     </div>
     
 </petclinic:layout>

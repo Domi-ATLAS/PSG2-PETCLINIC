@@ -31,14 +31,18 @@
                     <c:out value="${cause.budgetTarget}"/>
                 </td>
                 <td>
-                    <a class="btn btn-default" style="font-size: 15px; font-family: sans-serif; margin-left: 75%; margin-right: 10%;"  href="/causes/details/{cause.id}">Details</a>
+                    <div>
+                        <a class="btn btn-default" style="font-size: 15px; font-family: sans-serif; margin-left: 75%; margin-right: 10%;"  href="/causes/details/${cause.id}">Details</a>
+                        <c:if test="${!cause.isClosed}">
+                            <a class="btn btn-default" style="font-size: 15px; font-family: sans-serif; margin-left: 75%; margin-right: 10%;"  href="/donation/new/${cause.id}">Donate</a>
+                        </c:if>
+                    </div>
                 </td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
     <div style="position: relative;">
-        <a class="btn btn-default" style="font-size: 15px; font-family: sans-serif; margin-left: 75%; margin-right: 10%;"  href="/donation/new">Donate</a>
         <a class="btn btn-default" style="font-size: 15px; font-family: sans-serif; margin-left: 75%; margin-right: 10%;"  href="/causes/new">Create a new cause</a>
     </div>
     

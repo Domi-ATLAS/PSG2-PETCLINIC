@@ -47,8 +47,8 @@ public class Cause extends NamedEntity{
 
    public Double getAchievedBudget(){
     Double res = 0.0;
-    for(Donation e:this.getDonations()){
-        res += e.getCantidad();
+    for(Donation d:this.getDonations()){
+        res += d.getAmount();
     }
     return res;
    }

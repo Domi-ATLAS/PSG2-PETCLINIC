@@ -73,7 +73,7 @@ VALUES (1, 'CausaEjemplo1', 'Para recaudar dinero para escuela', 320.0, 'Zarrín
 
 INSERT INTO donation (id, amount, message, donor_name, date) VALUES (1, 300.0, 'Para la PlayStation5', 'Paquito el chocolatero', '2023-01-05');
 
-INSERT INTO cause_donations (cause_id, donations_id) VALUES (1,1)
+INSERT INTO cause_donations (cause_id, donations_id) VALUES (1,1);
 
 INSERT INTO adoption_request(id,message,author_id,pet_id,selected_response_id) VALUES(1,'Hola',3,3,null);
 

@@ -7,32 +7,32 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="causes">
-    <h2>Cause: ${cause.name}</h2>
+    <h2>Causa: ${cause.name}</h2>
 
     <div>
-        Description: ${cause.description}
+        Descripci&oacute;n: ${cause.description}
     </div>
     <div>
-        Achieved budget: ${cause.achievedBudget}/${cause.budgetTarget}
+        Dinero conseguido: ${cause.achievedBudget}/${cause.budgetTarget}
     </div>
     <div>
-        Organization: ${cause.nonProfitOrganization}
+        Organizaci&oacute;: ${cause.nonProfitOrganization}
     </div>
     <div>
         <c:if test="${cause.isClosed}">
-            This cause is closed
+            La causa esta cerrada
         </c:if>
     </div>
 
-    <h2>Donations</h2>
+    <h2>Donaciones</h2>
 
     <table id="donations" class="table table-striped">
         <thead style="background-color: lightgray;">
         <tr>
-            <th style="width: 150px;">Amount</th>
-            <th style=" width: 200px;">Donor Name</th>
-            <th>Message</th>
-            <th>Date</th>
+            <th style="width: 150px;">Cantidad</th>
+            <th style=" width: 200px;">Donante</th>
+            <th>Mensaje</th>
+            <th>Fecha</th>
         </tr>
         </thead>
         <tbody>

@@ -7,7 +7,7 @@
 <petclinic:layout pageName="donation">
     <jsp:body>
         <div style="text-align: center; ">
-            <h2 style = "font-size: 40px; margin-bottom: 3%;";>Craar Donaci&oacute;n</h2>
+            <h2 style = "font-size: 40px; margin-bottom: 3%;";>Crear Donaci&oacute;n</h2>
         </div>
         <form:form modelAttribute="donation" class="form-horizontal">
             <input type="hidden" name="id" value="${donation.id}"/>

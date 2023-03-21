@@ -69,7 +69,7 @@ INSERT INTO visits(id,pet_id,visit_date,description) VALUES (3, 8, '2013-01-03',
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (4, 7, '2013-01-04', 'esterilizado');
 
 INSERT INTO cause(id, name, description, budget_target, non_profit_organization, is_closed) 
-VALUES (1, 'CausaEjemplo1', 'Para recaudar dinero para escuela', 320.0, 'ZarrínONG', FALSE);
+VALUES (1, 'CausaEjemplo1', 'Para recaudar dinero para escuela', 320.0, 'ZarrinONG', FALSE);
 
 INSERT INTO donation (id, amount, message, donor_name, date) VALUES (1, 300.0, 'Para la PlayStation5', 'Paquito el chocolatero', '2023-01-05');
 

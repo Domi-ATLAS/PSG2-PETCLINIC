@@ -1,3 +1,4 @@
+<%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page session="false" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -12,7 +13,7 @@
         <form:form modelAttribute="cause" class="form-horizontal">
             <input type="hidden" name="id" value="${cause.id}"/>
             <div class="form-group has-feedback">                
-                <petclinic:inputField label="Nombre de la caussa:" name="name"/>
+                <petclinic:inputField label="Nombre de la causa:" name="name"/>
                 <petclinic:inputField label="Descripción:" name="description"/>
                 <petclinic:inputField label="Cantidad objetivo:" name="budgetTarget"/>
                 <petclinic:inputField label="Organización:" name="nonProfitOrganization"/>

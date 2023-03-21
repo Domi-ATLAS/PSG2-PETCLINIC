@@ -16,7 +16,7 @@
         Dinero conseguido: ${cause.achievedBudget}/${cause.budgetTarget}
     </div>
     <div>
-        Organizaci&oacute;: ${cause.nonProfitOrganization}
+        Organizaci&oacute;n: ${cause.nonProfitOrganization}
     </div>
     <div>
         <c:if test="${cause.isClosed}">

@@ -16,6 +16,7 @@
 package org.springframework.samples.petclinic.owner;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.jpa.repository.Modifying;
@@ -63,5 +64,8 @@ public interface OwnerRepository extends Repository<Owner, Integer> {
 	@Modifying
     @Query(value="DELETE FROM owners WHERE id = ?1",nativeQuery = true)
     void deleteOwner(@Param("id") Integer id);
+
+	
+    List<Owner> findAll();
 
 }

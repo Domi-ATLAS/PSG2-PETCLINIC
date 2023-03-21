@@ -28,9 +28,6 @@ import org.springframework.test.web.servlet.MockMvc;
 @WebMvcTest(controllers = VetController.class, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class), excludeAutoConfiguration = SecurityConfiguration.class)
 class VetControllerTests {
 
-	@Autowired
-	private VetController vetController;
-
 	@MockBean
 	private VetService clinicService;
 

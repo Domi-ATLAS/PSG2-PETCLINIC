@@ -43,14 +43,16 @@ public class CauseService {
     @Transactional
 
     public void editCause(Cause c) throws DataAccessException{
-        Cause toUpdate = causeRepository.findById(c.getId()).get();
-        toUpdate.setId(c.getId());
-        toUpdate.setBudgetTarget(c.getBudgetTarget());
-        toUpdate.setDescription(c.getDescription());
-        toUpdate.setDonations(c.getDonations());
-        toUpdate.setIsClosed(c.getIsClosed());
-        toUpdate.setName(c.getName());
-        toUpdate.setNonProfitOrganization(c.getNonProfitOrganization());
+        Cause toUpdate = causeRepository.findById(c.getId()).orElse(null);
+        if(!toUpdate.equals(null)){
+            toUpdate.setId(c.getId());
+            toUpdate.setBudgetTarget(c.getBudgetTarget());
+            toUpdate.setDescription(c.getDescription());
+            toUpdate.setDonations(c.getDonations());
+            toUpdate.setIsClosed(c.getIsClosed());
+            toUpdate.setName(c.getName());
+            toUpdate.setNonProfitOrganization(c.getNonProfitOrganization());
+        }
         causeRepository.save(toUpdate);
     }
     

@@ -1,6 +1,7 @@
 package org.springframework.samples.petclinic.adptionResponse;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -67,7 +68,12 @@ public class AdoptionResponseController {
         }else{
             adoptionResponse.setOwner(obtenerOwnerLogueado(principal.getName()));
             adoptionReponseService.save(adoptionResponse);
-            List<AdoptionResponse> responses = adoptionRequest.getResponses();
+            List<AdoptionResponse> responses;
+            if(!adoptionRequest.equals(null)){
+                responses = adoptionRequest.getResponses();
+            }else{
+                responses = new ArrayList<>();
+            }
             responses.add(adoptionResponse);
             adoptionRequest.setResponses(responses);
             adoptionRequestService.saveAdoptionRequest(adoptionRequest);
@@ -97,9 +103,11 @@ public class AdoptionResponseController {
         ModelAndView res = new ModelAndView("redirect:/adoptionRequest/list");
         AdoptionResponse adoptionResponseSelected = adoptionReponseService.getApplicationById(adoptionRequest.getSelectedResponse().getId()).orElse(null);
         AdoptionRequest adoptionRequestToChange = adoptionRequestService.getById(adoptionRequestId).orElse(null);
-        adoptionRequestToChange.setSelectedResponse(adoptionResponseSelected);
-        adoptionRequestToChange.setAvalible(false);
-        adoptionRequestService.saveAdoptionRequest(adoptionRequestToChange);
+        if(!adoptionRequestToChange.equals(null)){
+            adoptionRequestToChange.setSelectedResponse(adoptionResponseSelected);
+            adoptionRequestToChange.setAvalible(false);
+            adoptionRequestService.saveAdoptionRequest(adoptionRequestToChange);
+        }
         Pet pet = adoptionRequestToChange.getPet();
         pet.setOwner(adoptionRequestToChange.getSelectedResponse().getOwner());
         petService.savePet(pet);
@@ -110,7 +118,6 @@ public class AdoptionResponseController {
         ownerService.saveOwner(ownerAdopt);
         ownerService.saveOwner(ownerGivesPet);
         return res;
-        
     }
 
     @GetMapping("/delete/{adoptionRequestId}/{id}")
@@ -119,7 +126,9 @@ public class AdoptionResponseController {
         AdoptionResponse adoptionResponse = adoptionReponseService.getById(id).orElse(null);
         if(adoptionResponse != null){
             AdoptionRequest adoptionRequest = adoptionRequestService.getById(adoptionRequestId).orElse(null);
-            adoptionRequest.getResponses().remove(adoptionResponse);
+            if(!adoptionRequest.equals(null)){
+                adoptionRequest.getResponses().remove(adoptionResponse);
+            }
             adoptionRequestService.saveAdoptionRequest(adoptionRequest);
             adoptionReponseService.deleteApplicationById(id);
         }

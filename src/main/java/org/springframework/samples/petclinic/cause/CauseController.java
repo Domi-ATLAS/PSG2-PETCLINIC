@@ -63,9 +63,10 @@ public class CauseController {
     @GetMapping("details/{id}")
     public ModelAndView causeDetails(@PathVariable("id") Integer id){
         ModelAndView result = new ModelAndView("cause/causeDetails");
-        Cause cause = causeService.getCauseById(id).get();
-        result.addObject("cause", cause);
-
+        Cause cause = causeService.getCauseById(id).orElse(null);
+        if(!cause.equals(null)){
+            result.addObject("cause", cause);
+        }
         return result;
     }
 

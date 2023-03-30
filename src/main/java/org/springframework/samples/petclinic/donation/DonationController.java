@@ -49,11 +49,13 @@ public class DonationController {
             return res;
         }
         donationService.saveDonation(donation);
-        Cause toUpdate = causeService.getCauseById(causeId).get();
+        Cause toUpdate = causeService.getCauseById(causeId).orElse(null);
         List<Donation> donations = toUpdate.getDonations();
         donations.add(donation);
         toUpdate.setDonations(donations);
-        causeService.editCause(toUpdate);
+        if(!toUpdate.equals(null)){
+            causeService.editCause(toUpdate);
+        }
         ModelAndView result = new ModelAndView("redirect:/causes");
         result.addObject("message", "The donation was succesfully added");
         return result;

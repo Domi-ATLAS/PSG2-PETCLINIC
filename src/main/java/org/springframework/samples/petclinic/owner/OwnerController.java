@@ -25,8 +25,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.pet.Pet;
 import org.springframework.samples.petclinic.pet.PetService;
 import org.springframework.samples.petclinic.pet.Visit;
-import org.springframework.samples.petclinic.user.AuthoritiesService;
-import org.springframework.samples.petclinic.user.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -50,15 +48,12 @@ public class OwnerController {
 
 	private final OwnerService ownerService;
 	private final PetService petService;
-	private final UserService userService;
-	private final AuthoritiesService authoritiesService;
 
 	@Autowired
-	public OwnerController(OwnerService ownerService, UserService userService, AuthoritiesService authoritiesService,PetService petService) {
+	public OwnerController(OwnerService ownerService,PetService petService) {
 		this.ownerService = ownerService;
 		this.petService=petService;
-		this.userService=userService;
-		this.authoritiesService=authoritiesService;
+
 	}
 
 	@InitBinder

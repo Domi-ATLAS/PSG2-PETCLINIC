@@ -3,11 +3,13 @@ package org.springframework.samples.petclinic.booking;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.pet.Pet;
 import org.springframework.samples.petclinic.pet.PetService;
+import org.springframework.samples.petclinic.user.PricingPlan;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,32 +35,44 @@ public class BookingController {
     }
 
     @GetMapping("/new")
-    public ModelAndView createBooking(Principal principal){
-        Booking booking = new Booking();
-        ModelAndView res = new ModelAndView(CREATE_BOOKING);
-        List<Pet> petsFiltered = petService.getPetsByOwnerUsername(principal.getName());
-        res.addObject("booking",booking);
-        res.addObject("pets",petsFiltered);
-        return res;
+    public ModelAndView createBooking(Principal principal,Map<String,Object> model){
+        PricingPlan plan = (PricingPlan)model.get("currentPlan");
+        if(plan==null||plan==PricingPlan.BASIC||plan ==PricingPlan.ADVANCED){
+            model.put("message","Con tu plan no puedes hacer reservas");
+            return new ModelAndView("redirect:/");
+        }else{ 
+            Booking booking = new Booking();
+            ModelAndView res = new ModelAndView(CREATE_BOOKING);
+            List<Pet> petsFiltered = petService.getPetsByOwnerUsername(principal.getName());
+            res.addObject("booking",booking);
+            res.addObject("pets",petsFiltered);
+            return res;
+        }
     }
 
     @PostMapping("/new")
-    public ModelAndView saveBooking(@Valid Booking booking,BindingResult br,Principal principal) throws BadDateException{
-        ModelAndView res = new ModelAndView(CREATE_BOOKING,br.getModel());
-        List<Pet> petsFiltered = petService.getPetsByOwnerUsername(principal.getName());
-        res.addObject("pets",petsFiltered);
-        if(br.hasErrors()){
+    public ModelAndView saveBooking(@Valid Booking booking,BindingResult br,Principal principal,Map<String,Object> model) throws BadDateException{
+        PricingPlan plan = (PricingPlan)model.get("currentPlan");
+        if(plan==null||plan==PricingPlan.BASIC||plan ==PricingPlan.ADVANCED){
+            model.put("message","Con tu plan no puedes hacer reservas");
+            return new ModelAndView("redirect:/");
+        }else{     
+            ModelAndView res = new ModelAndView(CREATE_BOOKING,br.getModel());
+            List<Pet> petsFiltered = petService.getPetsByOwnerUsername(principal.getName());
             res.addObject("pets",petsFiltered);
-        }else{
-            try{
-                this.bookingService.save(booking);
-                res = new ModelAndView("redirect:/booking/list");
-            }catch(Exception e){
-                String mesage = badBoookingDatesMesage(booking);
-                res.addObject("mesage",mesage);
+            if(br.hasErrors()){
+                res.addObject("pets",petsFiltered);
+            }else{
+                try{
+                    this.bookingService.save(booking);
+                    res = new ModelAndView("redirect:/booking/list");
+                }catch(Exception e){
+                    String mesage = badBoookingDatesMesage(booking);
+                    res.addObject("mesage",mesage);
+                }
             }
+            return res;
         }
-        return res;
     }
 
     public String badBoookingDatesMesage(Booking booking){
@@ -77,23 +91,35 @@ public class BookingController {
     }
 
     @GetMapping("/list")
-    public ModelAndView listBookings(Principal principal){
-        List<Booking> bookings = bookingService.getAllBookings();
-        List<Booking> auxiliar = bookings.stream()
-                    .filter(x->x.getPet().getOwner().getUser().getUsername().equals(principal.getName()))
-                    .collect(Collectors.toList());
-        ModelAndView res = new ModelAndView(LIST_BOOKINGS);
-        res.addObject("principal",principal.getName());
-        res.addObject("bookings",auxiliar);
-        return res;
+    public ModelAndView listBookings(Principal principal,Map<String,Object> model){
+        PricingPlan plan = (PricingPlan)model.get("currentPlan");
+        if(plan==null||plan==PricingPlan.BASIC||plan ==PricingPlan.ADVANCED){
+            model.put("message","Con tu plan no puedes ver las reservas");
+            return new ModelAndView("redirect:/");
+        }else{    
+            List<Booking> bookings = bookingService.getAllBookings();
+            List<Booking> auxiliar = bookings.stream()
+                        .filter(x->x.getPet().getOwner().getUser().getUsername().equals(principal.getName()))
+                        .collect(Collectors.toList());
+            ModelAndView res = new ModelAndView(LIST_BOOKINGS);
+            res.addObject("principal",principal.getName());
+            res.addObject("bookings",auxiliar);
+            return res;
+        }
     }
 
     @GetMapping("/{id}/delete")
-    public ModelAndView deleteBooking(@PathVariable("id") Integer id){
-        Booking booking = bookingService.getBookingById(id).orElse(null);
-        if(booking != null){
-            bookingService.deleteBookingById(id);
+    public ModelAndView deleteBooking(@PathVariable("id") Integer id,Map<String,Object> model){
+        PricingPlan plan = (PricingPlan)model.get("currentPlan");
+        if(plan==null||plan==PricingPlan.BASIC||plan ==PricingPlan.ADVANCED){
+            model.put("message","Con tu plan no puedes cancelar reservas");
+            return new ModelAndView("redirect:/");
+        }else{     
+            Booking booking = bookingService.getBookingById(id).orElse(null);
+            if(booking != null){
+                bookingService.deleteBookingById(id);
+            }
+            return new ModelAndView("redirect:/booking/list");
         }
-        return new ModelAndView("redirect:/booking/list");
     }
 }

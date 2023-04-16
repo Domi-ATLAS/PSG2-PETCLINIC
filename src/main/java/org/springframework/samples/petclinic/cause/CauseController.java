@@ -2,10 +2,12 @@ package org.springframework.samples.petclinic.cause;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.user.PricingPlan;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,32 +44,44 @@ public class CauseController {
     }
 
     @GetMapping("/new")
-    public ModelAndView createCause(){
-        Cause cause = new Cause();
-        ModelAndView result = new ModelAndView("cause/createCause");
-        result.addObject("cause", cause);
-        return result;
+    public ModelAndView createCause(Map<String,Object> model){
+        PricingPlan plan = (PricingPlan)model.get("currentPlan");
+        if(plan==null||plan==PricingPlan.BASIC||plan ==PricingPlan.ADVANCED){
+            model.put("message","Con tu plan no puedes crear una causa");
+            return new ModelAndView("redirect:/");
+        }else{
+            Cause cause = new Cause();
+            ModelAndView result = new ModelAndView("cause/createCause");
+            result.addObject("cause", cause);
+            return result;
+        }
     }
 
     @PostMapping("/new")
-    public ModelAndView saveNewCause(@Valid Cause cause, BindingResult br){
-        if(br.hasErrors()){
-            return new ModelAndView("cause/createCause", br.getModel());
+    public ModelAndView saveNewCause(@Valid Cause cause, BindingResult br,Map<String,Object> model){
+        PricingPlan plan = (PricingPlan)model.get("currentPlan");
+        if(plan==null||plan==PricingPlan.BASIC||plan ==PricingPlan.ADVANCED){
+            model.put("message","Con tu plan no puedes crear una causa");
+            return new ModelAndView("redirect:/");
+        }else{    
+            if(br.hasErrors()){
+                return new ModelAndView("cause/createCause", br.getModel());
+            }
+            causeService.save(cause);
+            ModelAndView result = new ModelAndView("redirect:/causes");
+            result.addObject("message", "The cause was succesfully added");
+            return result;
         }
-        causeService.save(cause);
-        ModelAndView result = new ModelAndView("redirect:/causes");
-        result.addObject("message", "The cause was succesfully added");
-        return result;
     }
 
     @GetMapping("details/{id}")
-    public ModelAndView causeDetails(@PathVariable("id") Integer id){
-        ModelAndView result = new ModelAndView("cause/causeDetails");
-        Cause cause = causeService.getCauseById(id).orElse(null);
-        if(!cause.equals(null)){
-            result.addObject("cause", cause);
-        }
-        return result;
+    public ModelAndView causeDetails(@PathVariable("id") Integer id,Map<String,Object> model){
+            ModelAndView result = new ModelAndView("cause/causeDetails");
+            Cause cause = causeService.getCauseById(id).orElse(null);
+            if(!cause.equals(null)){
+                result.addObject("cause", cause);
+            }
+            return result;
     }
 
 

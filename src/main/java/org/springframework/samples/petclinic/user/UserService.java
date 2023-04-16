@@ -16,6 +16,7 @@
 package org.springframework.samples.petclinic.user;
 
 
+import java.security.Principal;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,5 +50,17 @@ public class UserService {
 	
 	public Optional<User> findUser(String username) {
 		return userRepository.findById(username);
+	}
+
+	public User currentUser(Principal principal){
+		Optional<User> res = null;
+		if(principal!=null){
+			res=findUser(principal.getName());
+		}
+		if(res!=null && res.isPresent()){
+			return res.get();
+		}else{
+			return null;
+		}
 	}
 }

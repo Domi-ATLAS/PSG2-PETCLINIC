@@ -15,19 +15,24 @@
  */
 package org.springframework.samples.petclinic.user;
 
+import java.security.Principal;
 import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.ReturnedType;
 import org.springframework.samples.petclinic.owner.Owner;
 import org.springframework.samples.petclinic.owner.OwnerService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * @author Juergen Hoeller
@@ -40,12 +45,22 @@ public class UserController {
 
 	private static final String VIEWS_OWNER_CREATE_FORM = "users/createOwnerForm";
 
+	private static final String CHANGE_PLAN = "users/changePlan";
+
+	private static final String USER_PROFILE = "users/userProfile";
+
 	private final OwnerService ownerService;
 
+	private final UserService userService;
+
 	@Autowired
-	public UserController(OwnerService clinicService) {
+	public UserController(OwnerService clinicService,UserService userService) {
 		this.ownerService = clinicService;
+		this.userService = userService;
 	}
+
+	
+
 
 	@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
@@ -66,9 +81,54 @@ public class UserController {
 		}
 		else {
 			//creating owner, user, and authority
+			owner.getUser().setPlan(PricingPlan.BASIC);
 			this.ownerService.saveOwner(owner);
 			return "redirect:/";
 		}
 	}
+
+	@GetMapping("/users/changePlan")
+	public ModelAndView changePlan(Principal principal,Map<String,Object> model){
+		ModelAndView res =  new ModelAndView(CHANGE_PLAN);
+		PricingPlan plan = (PricingPlan)model.get("currentPlan");
+		res.addObject("user",userService.currentUser(principal));
+		res.addObject("plan",plan);
+		return res;
+	}
+
+	@PostMapping("/users/changePlan")
+	public ModelAndView changePlan(@Valid User user,BindingResult br,Principal principal){
+		ModelAndView res = new ModelAndView(CHANGE_PLAN);
+		if(br.hasErrors()){
+			res.addObject("user", userService.currentUser(principal));
+			return res;
+		}else{
+			User toUpdate = userService.findUser(principal.getName()).orElse(null);
+			toUpdate.setPlan(user.plan);
+
+			userService.saveUser(toUpdate);
+			return new ModelAndView("redirect:/");
+		}
+		
+
+	}
+
+	@GetMapping("/user/{userId}")
+	public ModelAndView showProfile(@PathVariable("userId") Integer userId){
+
+		User user = userService.findUserById(userId.toString());
+		Owner owner = ownerService.findByUserId(userId);
+		PricingPlan plan = user.getPlan();
+		ModelAndView res = new ModelAndView(USER_PROFILE);
+		if(plan != null){
+			res.addObject("plan", plan);
+		}		
+		res.addObject("user", user);
+		res.addObject("owner", owner);
+
+		return res;
+
+	}
+
 
 }

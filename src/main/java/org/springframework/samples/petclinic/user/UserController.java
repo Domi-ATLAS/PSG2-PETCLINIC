@@ -25,10 +25,12 @@ import org.springframework.data.repository.query.ReturnedType;
 import org.springframework.samples.petclinic.owner.Owner;
 import org.springframework.samples.petclinic.owner.OwnerService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -43,7 +45,9 @@ public class UserController {
 
 	private static final String VIEWS_OWNER_CREATE_FORM = "users/createOwnerForm";
 
-	private static final String CHANGE_PLAN="users/changePlan";
+	private static final String CHANGE_PLAN = "users/changePlan";
+
+	private static final String USER_PROFILE = "users/userProfile";
 
 	private final OwnerService ownerService;
 
@@ -108,5 +112,23 @@ public class UserController {
 		
 
 	}
+
+	@GetMapping("/users/{username}")
+	public ModelAndView showProfile(@PathVariable("username") String username){
+
+		User user = userService.findUser(username).get();
+		Owner owner = ownerService.findByUsername(user.getUsername());
+		PricingPlan plan = user.getPlan();
+		ModelAndView res = new ModelAndView(USER_PROFILE);
+		if(plan != null){
+			res.addObject("plan", plan);
+		}		
+		res.addObject("user", user);
+		res.addObject("owner", owner);
+
+		return res;
+
+	}
+
 
 }

@@ -37,7 +37,7 @@ public class BookingController {
     @GetMapping("/new")
     public ModelAndView createBooking(Principal principal,Map<String,Object> model){
         PricingPlan plan = (PricingPlan)model.get("currentPlan");
-        if(plan==null||plan==PricingPlan.BASIC||plan ==PricingPlan.ADVANCED){
+        if(plan==null||plan==PricingPlan.BASIC){
             model.put("message","Con tu plan no puedes hacer reservas");
             return new ModelAndView("redirect:/");
         }else{ 
@@ -53,7 +53,7 @@ public class BookingController {
     @PostMapping("/new")
     public ModelAndView saveBooking(@Valid Booking booking,BindingResult br,Principal principal,Map<String,Object> model) throws BadDateException{
         PricingPlan plan = (PricingPlan)model.get("currentPlan");
-        if(plan==null||plan==PricingPlan.BASIC||plan ==PricingPlan.ADVANCED){
+        if(plan==null||plan==PricingPlan.BASIC){
             model.put("message","Con tu plan no puedes hacer reservas");
             return new ModelAndView("redirect:/");
         }else{     
@@ -64,8 +64,14 @@ public class BookingController {
                 res.addObject("pets",petsFiltered);
             }else{
                 try{
-                    this.bookingService.save(booking);
-                    res = new ModelAndView("redirect:/booking/list");
+                    if(bookingService.getNumOfBookingsByOwner(principal.getName(),booking.startDate.getMonthValue())>=plan.bookings){
+                        res.addObject("mesage", "Has superado el límite de reservas para este mes");
+                    }else{
+                        this.bookingService.save(booking);
+                        res = new ModelAndView("redirect:/booking/list");
+                    }
+                    
+                    
                 }catch(Exception e){
                     String mesage = badBoookingDatesMesage(booking);
                     res.addObject("mesage",mesage);
@@ -93,7 +99,7 @@ public class BookingController {
     @GetMapping("/list")
     public ModelAndView listBookings(Principal principal,Map<String,Object> model){
         PricingPlan plan = (PricingPlan)model.get("currentPlan");
-        if(plan==null||plan==PricingPlan.BASIC||plan ==PricingPlan.ADVANCED){
+        if(plan==null||plan==PricingPlan.BASIC){
             model.put("message","Con tu plan no puedes ver las reservas");
             return new ModelAndView("redirect:/");
         }else{    
@@ -111,7 +117,7 @@ public class BookingController {
     @GetMapping("/{id}/delete")
     public ModelAndView deleteBooking(@PathVariable("id") Integer id,Map<String,Object> model){
         PricingPlan plan = (PricingPlan)model.get("currentPlan");
-        if(plan==null||plan==PricingPlan.BASIC||plan ==PricingPlan.ADVANCED){
+        if(plan==null||plan==PricingPlan.BASIC){
             model.put("message","Con tu plan no puedes cancelar reservas");
             return new ModelAndView("redirect:/");
         }else{     

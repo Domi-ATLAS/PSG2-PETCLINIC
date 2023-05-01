@@ -14,15 +14,15 @@
         <c:if test="${type == 'veterinarian'}">
             <table class="table table-striped">
                 <tr>
-                    <th>Nombre</th>
+                    <th>Name</th>
                     <td><b><c:out value="${user.username} "/></b></td>
                 </tr>
                 <tr>
-                    <th>Dirección</th>
+                    <th>Address</th>
                     <td><c:out value="${vet.firstName}"/></td>
                 </tr>
                 <tr>
-                    <th>Ciudad</th>
+                    <th>City</th>
                     <td><c:out value="${vet.lastName}"/></td>
                 </tr>
             </table>
@@ -50,19 +50,19 @@
         <c:if test="${type == 'owner'}">
             <table class="table table-striped">
                 <tr>
-                    <th>Nombre</th>
+                    <th>Name</th>
                     <td><b><c:out value="${user.username} "/></b></td>
                 </tr>
                 <tr>
-                    <th>Dirección</th>
+                    <th>Address</th>
                     <td><c:out value="${owner.address}"/></td>
                 </tr>
                 <tr>
-                    <th>Ciudad</th>
+                    <th>City</th>
                     <td><c:out value="${owner.city}"/></td>
                 </tr>
                 <tr>
-                    <th>Teléfono</th>
+                    <th>Telephone Number</th>
                     <td><c:out value="${owner.telephone}"/></td>
                 </tr>
             </table>
@@ -78,11 +78,11 @@
                     <tr>
                         <td valign="top">
                             <dl class="dl-horizontal">
-                                <dt>Nombre</dt>
+                                <dt>Name</dt>
                                 <dd><c:out value="${pet.name}"/></dd>
-                                <dt>Cumpleaños</dt>
+                                <dt>BirthDay</dt>
                                 <dd><petclinic:localDate date="${pet.birthDate}" pattern="yyyy-MM-dd"/></dd>
-                                <dt>Tipo</dt>
+                                <dt>Pet type</dt>
                                 <dd><c:out value="${pet.type.name}"/></dd>
                             </dl>
                         </td>

@@ -2,7 +2,6 @@ package org.springframework.samples.petclinic.booking;
 
 
 import java.time.LocalDate;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -70,8 +69,4 @@ public class BookingService {
         bookingRepository.deleteById(id);
     }
 
-    @Transactional(readOnly = true)
-    public Integer getNumOfBookingsByOwner(String owner,Integer mes){
-        return bookingRepository.countBookingsByOwner(owner,mes);
-    }
 }

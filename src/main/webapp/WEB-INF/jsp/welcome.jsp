@@ -15,6 +15,6 @@
         </div>
     </div>
     <c:out value="${model.get('message')}"/>
-
+    <a class="btn btn-default"  href="/users/${username}">User Profile</a>
     <a class="btn btn-default"  href="/users/changePlan">Cambiar plan</a>
 </petclinic:layout>

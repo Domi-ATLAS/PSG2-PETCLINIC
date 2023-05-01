@@ -63,4 +63,8 @@ public class VetService {
         return vetRepository.findAllSpecialty();
     }
 
+	@Transactional(readOnly = true)
+    public Vet findByUserName(String username) {
+        return vetRepository.findByUsername(username);
+    }
 }

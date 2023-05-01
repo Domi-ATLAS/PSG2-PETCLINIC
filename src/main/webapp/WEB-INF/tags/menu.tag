@@ -48,6 +48,12 @@
 					<span>Causas</span>
 				</petclinic:menuItem>
 
+				<petclinic:menuItem active="${name eq 'profile'}" url="/user/${username}"
+					title="Profile">
+					<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+					<span>Profile</span>
+				</petclinic:menuItem>
+
 				<sec:authorize access="isAuthenticated()">
 					<c:if test="${currentPlan.name ne 'BASIC'}">
 						<petclinic:menuItem active="${name eq 'bookings'}" url="/booking/list"

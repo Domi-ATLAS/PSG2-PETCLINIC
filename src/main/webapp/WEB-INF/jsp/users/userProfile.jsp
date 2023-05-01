@@ -70,7 +70,7 @@
             <br/>
             <br/>
             <br/>
-            <h2>Mascotas</h2>
+            <h2>Pets</h2>
         
             <table class="table table-striped">
                 <c:forEach var="pet" items="${owner.pets}">

@@ -37,7 +37,7 @@ public class ExchangeCurrency {
     }
 
     //This method converts from the current currency to another 
-    //Takes the currency to convert as argument
+    //Takes the currency to convert to as argument
     public ExchangeCurrency convertTo(Currency conversionType){
 
         Double newValue = this.value/referenceValues.get(this.currency)*referenceValues.get(conversionType);

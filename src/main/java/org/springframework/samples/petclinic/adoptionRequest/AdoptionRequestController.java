@@ -6,12 +6,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.samples.petclinic.pet.Pet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.pet.PetService;
+import org.springframework.samples.petclinic.user.PricingPlan;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.web.servlet.ModelAndView;
@@ -31,14 +33,20 @@ public class AdoptionRequestController {
 
 
     @GetMapping(value="adoptionRequest/new")
-    public ModelAndView initCreationAdoptionRequestForm(Principal principal){
-        AdoptionRequest request = new AdoptionRequest();
-        ModelAndView res = new ModelAndView(CREATE_ADOPTION_REQUEST);
-        List<Pet> petByowner = petService.getPetsByOwnerUsername(principal.getName());
-        List<Pet> petsFiltered = filterPestToCreateAdoptionRequest(petByowner, principal.getName());
-        res.addObject("pets", petsFiltered);
-        res.addObject("adoptinoRequest", request);
-        return res;
+    public ModelAndView initCreationAdoptionRequestForm(Principal principal,Map<String,Object> model){
+        PricingPlan plan = (PricingPlan)model.get("currentPlan");
+        if(plan==null||plan==PricingPlan.BASIC){
+            model.put("message","Con tu plan no puedes solicitar adopciones");
+            return new ModelAndView("redirect:/");
+        }else{
+            AdoptionRequest request = new AdoptionRequest();
+            ModelAndView res = new ModelAndView(CREATE_ADOPTION_REQUEST);
+            List<Pet> petByowner = petService.getPetsByOwnerUsername(principal.getName());
+            List<Pet> petsFiltered = filterPestToCreateAdoptionRequest(petByowner, principal.getName());
+            res.addObject("pets", petsFiltered);
+            res.addObject("adoptinoRequest", request);
+            return res;
+        }
     }
 
     public List<Pet> filterPestToCreateAdoptionRequest(List<Pet> pets,String principal){
@@ -55,47 +63,73 @@ public class AdoptionRequestController {
 
 
     @PostMapping("adoptionRequest/new")
-    public ModelAndView saveBooking(@Valid AdoptionRequest adoptionRequest,BindingResult br,Principal principal){
-        ModelAndView res = new ModelAndView(CREATE_ADOPTION_REQUEST,br.getModel());
-        if(br.hasErrors()){
-            List<Pet> petByowner = petService.getPetsByOwnerUsername(principal.getName());
-            List<Pet> petsFiltered = filterPestToCreateAdoptionRequest(petByowner, principal.getName());
-            res.addObject("pets",petsFiltered);
+    public ModelAndView saveBooking(@Valid AdoptionRequest adoptionRequest,BindingResult br,Principal principal,Map<String,Object> model){
+        PricingPlan plan = (PricingPlan)model.get("currentPlan");
+        if(plan==null||plan==PricingPlan.BASIC){    
+            model.put("message","Con tu plan no puedes solicitar adopciones");
+            return new ModelAndView("redirect:/");
+            
         }else{
-            adoptionRequest.setAuthor(adoptionRequest.getPet().getOwner());        
-            this.adoptionRequestService.saveAdoptionRequest(adoptionRequest);
-            res = new ModelAndView("redirect:/adoptionRequest/list");  
+            ModelAndView res = new ModelAndView(CREATE_ADOPTION_REQUEST,br.getModel());
+            if(br.hasErrors()){
+                List<Pet> petByowner = petService.getPetsByOwnerUsername(principal.getName());
+                List<Pet> petsFiltered = filterPestToCreateAdoptionRequest(petByowner, principal.getName());
+                res.addObject("pets",petsFiltered);
+            }else{
+                adoptionRequest.setAuthor(adoptionRequest.getPet().getOwner());        
+                this.adoptionRequestService.saveAdoptionRequest(adoptionRequest);
+                res = new ModelAndView("redirect:/adoptionRequest/list");  
+            }
+            return res;
+            
         }
-        return res;
     }
 
     @GetMapping(value="adoptionRequest/list")
-    public ModelAndView showAdoptionRequests(Principal principal){
-        ModelAndView res = new ModelAndView(LIST_ADOPTION_REQUEST);
-        List<AdoptionRequest> adoptionRequests = adoptionRequestService.getAll();
-        List<AdoptionRequest> adoptionRequestsFiltered = adoptionRequests.stream().filter(x->x.getAvalible()==null || x.getAvalible() == true).collect(Collectors.toList());
-        res.addObject("adoptionRequests", adoptionRequestsFiltered);
-        res.addObject("principal", principal.getName());
-        return res;
+    public ModelAndView showAdoptionRequests(Principal principal,Map<String,Object> model){
+        PricingPlan plan = (PricingPlan)model.get("currentPlan");
+        if(plan==null||plan==PricingPlan.BASIC){    
+            model.put("message","Con tu plan no puedes listar las solicitudes de adopción");
+            return new ModelAndView("redirect:/");
+        }else{
+            ModelAndView res = new ModelAndView(LIST_ADOPTION_REQUEST);
+            List<AdoptionRequest> adoptionRequests = adoptionRequestService.getAll();
+            List<AdoptionRequest> adoptionRequestsFiltered = adoptionRequests.stream().filter(x->x.getAvalible()==null || x.getAvalible() == true).collect(Collectors.toList());
+            res.addObject("adoptionRequests", adoptionRequestsFiltered);
+            res.addObject("principal", principal.getName());
+            return res;
+        }
     }
 
     @GetMapping(value="adoptionRequest/{id}")
-    public ModelAndView showAdoptionRequests(@PathVariable("id") Integer id,Principal principal){
-        ModelAndView res = new ModelAndView(SHOW_ADOPTION_REQUEST);
-        AdoptionRequest adoptionRequest = adoptionRequestService.getById(id).orElse(null);
-        res.addObject("principal", principal.getName());
-        res.addObject("adoptionRequest", adoptionRequest);
-        return res;
+    public ModelAndView showAdoptionRequests(@PathVariable("id") Integer id,Principal principal,Map<String,Object> model){
+        PricingPlan plan = (PricingPlan)model.get("currentPlan");
+        if(plan==null||plan==PricingPlan.BASIC){    
+            model.put("message","Con tu plan no puedes ver una solicitud de adopción");
+            return new ModelAndView("redirect:/");
+        }else{    
+            ModelAndView res = new ModelAndView(SHOW_ADOPTION_REQUEST);
+            AdoptionRequest adoptionRequest = adoptionRequestService.getById(id).orElse(null);
+            res.addObject("principal", principal.getName());
+            res.addObject("adoptionRequest", adoptionRequest);
+            return res;
+        }
     }
 
     @GetMapping(value ="adoptionRequest/delete/{id}")
-    public ModelAndView deleteAdoptionRequest(@PathVariable("id") Integer id){
-        ModelAndView res = new ModelAndView("redirect:/adoptionRequest/list");
-        AdoptionRequest adoptionRequest = adoptionRequestService.getById(id).orElse(null);
-        if(adoptionRequest !=null){
-            adoptionRequestService.deleteAdoptionRequest(adoptionRequest);
+    public ModelAndView deleteAdoptionRequest(@PathVariable("id") Integer id,Map<String,Object> model){
+        PricingPlan plan = (PricingPlan)model.get("currentPlan");
+        if(plan==null||plan==PricingPlan.BASIC){    
+            model.put("message","Con tu plan no puedes borrar las solicitudes de adopción adopciones");
+            return new ModelAndView("redirect:/");
+        }else{ 
+            ModelAndView res = new ModelAndView("redirect:/adoptionRequest/list");
+            AdoptionRequest adoptionRequest = adoptionRequestService.getById(id).orElse(null);
+            if(adoptionRequest !=null){
+                adoptionRequestService.deleteAdoptionRequest(adoptionRequest);
+            }
+            return res;
         }
-        return res;
     }
 
 

@@ -74,4 +74,8 @@ public class OwnerService {
 	public List<Owner> getAll(){
 		return ownerRepository.findAll();
 	}
+
+	public Owner findByUsername(String username){
+		return ownerRepository.findByUsername(username);
+	}
 }

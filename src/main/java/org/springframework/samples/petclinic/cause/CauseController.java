@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.cause;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.exchange.Currency;
 import org.springframework.samples.petclinic.exchange.ExchangeCurrency;
 import org.springframework.samples.petclinic.user.PricingPlan;
+import org.springframework.samples.petclinic.user.User;
+import org.springframework.samples.petclinic.user.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,15 +28,24 @@ public class CauseController {
     private static final String LIST_CAUSES = "cause/causeList";
 
 	private final CauseService causeService;
+    private final UserService userService;
 
 	@Autowired
-	public CauseController(CauseService causeService) {
+	public CauseController(CauseService causeService, UserService userService) {
 		this.causeService = causeService;
+        this.userService = userService;
+
 	}
 
     @GetMapping()
-    public ModelAndView causeList(){
-        Map<Cause,List<ExchangeCurrency>> causeBudgets = causeService.findAllCausesByExchangeCurrency(Currency.USD);
+    public ModelAndView causeList(Principal principal){
+        User user = userService.findUser(principal.getName()).get();
+        Currency currency = Currency.USD;
+        if(user.getPreferedCurrency()!=null){
+            currency=user.getPreferedCurrency();
+        }
+        Map<Cause,List<ExchangeCurrency>> causeBudgets = causeService.findAllCausesByExchangeCurrency(currency);
+        
         ModelAndView res = new ModelAndView(LIST_CAUSES);
         causeService.checkCauses();
         res.addObject("causeBudgets", causeBudgets);

@@ -62,10 +62,10 @@ public class CauseService {
     }
 @Transactional  
 public Map<Cause,List<ExchangeCurrency>> findAllCausesByExchangeCurrency(Currency currency){
-    List<Cause> causes = getAllCauses();
+    List<Cause> causes = causeRepository.findAll();
     Map<Cause,List<ExchangeCurrency>> causeBudgets = new HashMap<>();
-        List<ExchangeCurrency> budgets = new ArrayList<>();
         for(Cause c: causes){
+            List<ExchangeCurrency> budgets = new ArrayList<>();
             ExchangeCurrency ec1 = new ExchangeCurrency(Currency.USD, c.getBudgetTarget());
             ExchangeCurrency ec2 = new ExchangeCurrency(Currency.USD, c.getAchievedBudget());
             ec1 = ec1.convertTo(currency);
@@ -80,7 +80,7 @@ public Map<Cause,List<ExchangeCurrency>> findAllCausesByExchangeCurrency(Currenc
 }
 @Transactional
 public void checkCauses(){
-    for(Cause c: getAllCauses()){
+    for(Cause c: causeRepository.findAll()){
         if(c.getAchievedBudget()>=c.getBudgetTarget()){
             c.setIsClosed(true);
             editCause(c);

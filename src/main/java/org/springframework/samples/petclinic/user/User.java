@@ -11,6 +11,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.samples.petclinic.exchange.Currency;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -32,4 +34,7 @@ public class User{
 	@NotNull
 	@Enumerated(EnumType.STRING)
 	PricingPlan plan;
+
+	@Enumerated(EnumType.STRING)
+	Currency preferedCurrency;
 }

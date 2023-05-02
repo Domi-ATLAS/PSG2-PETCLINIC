@@ -48,7 +48,7 @@
 					<span>Causas</span>
 				</petclinic:menuItem>
 
-				<petclinic:menuItem active="${name eq 'profile'}" url="/user/${username}"
+				<petclinic:menuItem active="${name eq 'profile'}" url="/users/${username}"
 					title="Profile">
 					<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
 					<span>Profile</span>

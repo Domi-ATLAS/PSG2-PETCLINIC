@@ -14,19 +14,15 @@
     <h2>Select currency:</h2>
 
     <div style="text-align: center; align-items: center;">
-        <form:form modelAttribute="currency" class="form-horizontal">
-            <div class="form-group has-feedback">
-                <div>
-    
-                    <select name="options" style="width: 150px;height: 50px;margin-bottom: 100 px;">
-                        <c:forEach items="${options}" var="option">
-                            <option value="${option}">${option}</option>
-                         </c:forEach>
-                    </select>
-                </div>    
-                <button class="btn btn-default" style="font-size: 20px; font-family: sans-serif; "  type="submit">Change currency</button>
-            </div>
-        </form:form>
+        <form action="/causes" method="post">
+            <label for="currency">Selecciona una divisa:</label>
+            <select name="currency" id="currency">
+              <c:forEach items="${options}" var="option">
+                <option value="${option}">${option}</option>
+              </c:forEach>
+            </select>
+            <button type="submit">Enviar</button>
+          </form>
         </div>
 
     <table id="causesList" class="table table-striped">

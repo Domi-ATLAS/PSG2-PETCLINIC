@@ -57,13 +57,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.and()
 				.logout()
 				.logoutUrl("/custom-logout")
-				.logoutSuccessUrl("/");
+				.logoutSuccessUrl("/")
+				.and().csrf().disable();
                 // Configuración para que funcione la consola de administración 
                 // de la BD H2 (deshabilitar las cabeceras de protección contra
                 // ataques de tipo csrf y habilitar los framesets si su contenido
                 // se sirve desde esta misma página.
                 http.csrf().ignoringAntMatchers("/h2-console/**");
                 http.headers().frameOptions().sameOrigin();
+				http.csrf().disable();
 	}
 
 	@Override

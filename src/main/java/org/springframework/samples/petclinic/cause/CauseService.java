@@ -66,8 +66,10 @@ public Map<Cause,List<ExchangeCurrency>> findAllCausesByExchangeCurrency(Currenc
     Map<Cause,List<ExchangeCurrency>> causeBudgets = new HashMap<>();
         List<ExchangeCurrency> budgets = new ArrayList<>();
         for(Cause c: causes){
-            ExchangeCurrency ec1 = new ExchangeCurrency(currency, c.getBudgetTarget());
-            ExchangeCurrency ec2 = new ExchangeCurrency(currency, c.getAchievedBudget());
+            ExchangeCurrency ec1 = new ExchangeCurrency(Currency.USD, c.getBudgetTarget());
+            ExchangeCurrency ec2 = new ExchangeCurrency(Currency.USD, c.getAchievedBudget());
+            ec1 = ec1.convertTo(currency);
+            ec2 = ec2.convertTo(currency);
             budgets.add(ec1);
             budgets.add(ec2);
             causeBudgets.put(c, budgets);

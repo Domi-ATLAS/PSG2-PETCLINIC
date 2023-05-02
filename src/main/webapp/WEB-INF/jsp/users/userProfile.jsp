@@ -92,6 +92,20 @@
             </table>
         </c:if>
 
+        <h2>Prefered currency: ${user.preferedCurrency}</h2>
+
+        <div style="text-align: center; align-items: center;">
+            <form action="/users/${user.username}" method="post">
+                <label for="currency">Change prefered currency:</label>
+                <select name="currency" id="currency">
+                  <c:forEach items="${options}" var="option">
+                    <option value="${option}">${option}</option>
+                  </c:forEach>
+                </select>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+
     
 
 

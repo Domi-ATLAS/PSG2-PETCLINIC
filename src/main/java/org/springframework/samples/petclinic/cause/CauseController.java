@@ -1,12 +1,16 @@
 package org.springframework.samples.petclinic.cause;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.exchange.Currency;
+import org.springframework.samples.petclinic.exchange.ExchangeCurrency;
 import org.springframework.samples.petclinic.user.PricingPlan;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -29,17 +33,28 @@ public class CauseController {
 		this.causeService = causeService;
 	}
 
-    @GetMapping("")
-    public ModelAndView causeList(Principal principal){
-        List<Cause> causes = causeService.getAllCauses();
+    @GetMapping()
+    public ModelAndView causeList(Principal principal, Currency currency){
+        Map<Cause,List<ExchangeCurrency>> causeBudgets = causeService.findAllCausesByExchangeCurrency(currency);
         ModelAndView res = new ModelAndView(LIST_CAUSES);
-        for(Cause c: causes){
-            if(c.getAchievedBudget()>=c.getBudgetTarget()){
-                c.setIsClosed(true);
-                causeService.editCause(c);
-            }
+        causeService.checkCauses();
+        res.addObject("causeBudgets", causeBudgets);
+        res.addObject("options", Currency.values());
+        return res;
+    }
+
+    @PostMapping()
+    public ModelAndView changeCurrency(@Valid Currency currency, BindingResult br, Principal principal){
+        ModelAndView res = new ModelAndView(LIST_CAUSES);
+        Map<Cause,List<ExchangeCurrency>> causeBudgets = causeService.findAllCausesByExchangeCurrency(Currency.USD);
+
+        if(br.hasErrors()){
+            res.addObject("mesage", "Currency couldn´t be changed");
+        }else{
+            res.addObject("causeBudgets", causeBudgets);
+            causeBudgets = causeService.findAllCausesByExchangeCurrency(currency);
         }
-        res.addObject("causes",causes);
+        
         return res;
     }
 

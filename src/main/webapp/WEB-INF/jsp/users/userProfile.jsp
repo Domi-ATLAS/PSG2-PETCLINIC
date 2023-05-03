@@ -7,6 +7,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>  
 
 <petclinic:layout pageName="userProfile">
+    <a class="btn btn-default"  href="/users/changePlan">Cambiar plan</a>
 
     <h2>User Profile</h2>
 

@@ -35,7 +35,7 @@ INSERT INTO authorities(id,username,authority) VALUES (11,'owner8','owner');
 INSERT INTO users(username,password,enabled,plan) VALUES ('owner9','0wn3r',TRUE,'BASIC');
 INSERT INTO authorities(id,username,authority) VALUES (12,'owner9','owner');
 
-INSERT INTO users(username,password,enabled,plan,prefered_currency) VALUES ('David','1111',TRUE,'ADVANCED','BTC');
+INSERT INTO users(username,password,enabled,plan) VALUES ('David','1111',TRUE,'ADVANCED');
 INSERT INTO authorities(id,username,authority) VALUES (13,'David','owner');
 
 INSERT INTO users(username,password,enabled,plan) VALUES ('vet2','v3t',TRUE,'BASIC');

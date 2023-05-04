@@ -8,7 +8,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.samples.petclinic.exchange.Currency;
 import org.springframework.samples.petclinic.exchange.ExchangeCurrency;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -61,13 +60,13 @@ public class CauseService {
         causeRepository.save(toUpdate);
     }
 @Transactional  
-public Map<Cause,List<ExchangeCurrency>> findAllCausesByExchangeCurrency(Currency currency){
+public Map<Cause,List<ExchangeCurrency>> findAllCausesByExchangeCurrency(String currency){
     List<Cause> causes = causeRepository.findAll();
     Map<Cause,List<ExchangeCurrency>> causeBudgets = new HashMap<>();
         for(Cause c: causes){
             List<ExchangeCurrency> budgets = new ArrayList<>();
-            ExchangeCurrency ec1 = new ExchangeCurrency(Currency.USD, c.getBudgetTarget());
-            ExchangeCurrency ec2 = new ExchangeCurrency(Currency.USD, c.getAchievedBudget());
+            ExchangeCurrency ec1 = new ExchangeCurrency("USD", c.getBudgetTarget());
+            ExchangeCurrency ec2 = new ExchangeCurrency("USD", c.getAchievedBudget());
             ec1 = ec1.convertTo(currency);
             ec2 = ec2.convertTo(currency);
             budgets.add(ec1);
@@ -78,6 +77,7 @@ public Map<Cause,List<ExchangeCurrency>> findAllCausesByExchangeCurrency(Currenc
         return causeBudgets;
     
 }
+
 @Transactional
 public void checkCauses(){
     for(Cause c: causeRepository.findAll()){

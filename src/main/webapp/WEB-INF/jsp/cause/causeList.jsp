@@ -15,15 +15,15 @@
 
     <div style="text-align: center; align-items: center;">
         <form action="/causes" method="post">
-            <label for="currency">Selecciona una divisa:</label>
+            <label for="currency">Select currency:</label>
             <select name="currency" id="currency">
               <c:forEach items="${options}" var="option">
                 <option value="${option}">${option}</option>
               </c:forEach>
             </select>
-            <button type="submit">Enviar</button>
+            <button type="submit">Submit</button>
           </form>
-        </div>
+    </div>
 
     <table id="causesList" class="table table-striped">
         <thead style="background-color: lightgray;">
@@ -41,10 +41,10 @@
                     <c:out value="${causeBudget.key.name}"/>
                 </td>
                 <td>
-                    <c:out value="${causeBudget.value.get(1).value}"/>
+                    <c:out value="${causeBudget.value.get(1).value} ${causeBudget.value.get(1).currency}"/>
                 </td>
                 <td>
-                    <c:out value="${causeBudget.value.get(0).value}"/>
+                    <c:out value="${causeBudget.value.get(0).value} ${causeBudget.value.get(0).currency}"/>
                 </td>
                 <td>
                     <div>

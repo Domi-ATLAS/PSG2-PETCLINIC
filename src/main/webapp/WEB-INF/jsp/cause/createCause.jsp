@@ -15,7 +15,7 @@
             <div class="form-group has-feedback">                
                 <petclinic:inputField label="Nombre de la causa:" name="name"/>
                 <petclinic:inputField label="Descripción:" name="description"/>
-                <petclinic:inputField label="Cantidad objetivo:" name="budgetTarget"/>
+                <petclinic:inputField label="Cantidad objetivo: (En USD)" name="budgetTarget"/>
                 <petclinic:inputField label="Organización:" name="nonProfitOrganization"/>
             </div>
             <div style="text-align:center; margin-top: 1%;">

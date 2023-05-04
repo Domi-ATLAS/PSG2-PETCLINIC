@@ -67,6 +67,12 @@
 						</petclinic:menuItem>
 					</c:if>
 				</sec:authorize>
+
+				<petclinic:menuItem active="${name eq 'adoptionRequest'}" url="/users/CA"	
+					title="Acuerdo">
+					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+					<span>Acuerdo</span>
+				</petclinic:menuItem>
 			</ul>
 
 

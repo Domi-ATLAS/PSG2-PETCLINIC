@@ -5,6 +5,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- %@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %-->  
 
+<style>
+	.pos {
+		float: right;
+	}
+</style>
+
 <petclinic:layout pageName="home">
     <h2>Bienvenido al Petclinic PSG2-2223-G4-43</h2>
     <div class="row">
@@ -17,5 +23,9 @@
     </div>
     <c:out value="${model.get('message')}"/>
     <a class="btn btn-default"  href="/users/${username}">User Profile</a>
+
+    <div class="pos">
+        <a class="btn btn-primary" href="/changelog">Registro de cambios</a>
+    </div>
     <a class="btn btn-default" target="_blank" href="${url}">Address</a>
 </petclinic:layout>

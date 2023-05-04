@@ -7,7 +7,8 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.exchange.Currency;
+import org.springframework.samples.petclinic.donation.Donation;
+import org.springframework.samples.petclinic.donation.DonationService;
 import org.springframework.samples.petclinic.exchange.ExchangeCurrency;
 import org.springframework.samples.petclinic.user.PricingPlan;
 import org.springframework.samples.petclinic.user.User;
@@ -29,19 +30,21 @@ public class CauseController {
 
 	private final CauseService causeService;
     private final UserService userService;
+    private final DonationService donationService;
 
 	@Autowired
-	public CauseController(CauseService causeService, UserService userService) {
+	public CauseController(CauseService causeService, UserService userService, DonationService donationService) {
 		this.causeService = causeService;
         this.userService = userService;
+        this.donationService = donationService;
 
 	}
 
     @GetMapping()
     public ModelAndView causeList(Principal principal){
         User user = userService.findUser(principal.getName()).get();
-        Currency currency = Currency.USD;
-        if(user.getPreferedCurrency()!=null){
+        String currency = "USD";
+        if(user.getPreferedCurrency()!=null ){
             currency=user.getPreferedCurrency();
         }
         Map<Cause,List<ExchangeCurrency>> causeBudgets = causeService.findAllCausesByExchangeCurrency(currency);
@@ -49,16 +52,16 @@ public class CauseController {
         ModelAndView res = new ModelAndView(LIST_CAUSES);
         causeService.checkCauses();
         res.addObject("causeBudgets", causeBudgets);
-        res.addObject("options", Currency.values());
+        res.addObject("options", ExchangeCurrency.currencyMap().keySet());
         return res;
     }
 
     @PostMapping()
     public ModelAndView currencyCauseList(@RequestParam String currency){
         ModelAndView res = new ModelAndView(LIST_CAUSES);
-        Map<Cause,List<ExchangeCurrency>> causeBudgets = causeService.findAllCausesByExchangeCurrency(Currency.valueOf(currency));
+        Map<Cause,List<ExchangeCurrency>> causeBudgets = causeService.findAllCausesByExchangeCurrency(currency);
         res.addObject("causeBudgets", causeBudgets);
-        res.addObject("options", Currency.values());
+        res.addObject("options", ExchangeCurrency.currencyMap().keySet());
         
         return res;
     }
@@ -95,12 +98,26 @@ public class CauseController {
     }
 
     @GetMapping("details/{id}")
-    public ModelAndView causeDetails(@PathVariable("id") Integer id,Map<String,Object> model){
+    public ModelAndView causeDetails(@PathVariable("id") Integer id,Map<String,Object> model, Principal principal){
             ModelAndView result = new ModelAndView("cause/causeDetails");
+            User user = userService.findUser(principal.getName()).get();
             Cause cause = causeService.getCauseById(id).orElse(null);
+            String currency = "USD";
+            if(user.getPreferedCurrency()!=null ){
+                currency=user.getPreferedCurrency();
+            }
+            Map<Cause,List<ExchangeCurrency>> causeBudgets = causeService.findAllCausesByExchangeCurrency(currency);
+            List<ExchangeCurrency> budgets = causeBudgets.get(cause);
+            Double budgetTarget = budgets.get(0).getValue();
+            Double achievedBudget = budgets.get(1).getValue();
             if(!cause.equals(null)){
                 result.addObject("cause", cause);
             }
+            Map<Donation, ExchangeCurrency> donationAmounts = donationService.valueByDonation(cause, currency);
+            result.addObject("donationAmounts", donationAmounts);
+            result.addObject("achievedBudget", achievedBudget);
+            result.addObject("budgetTarget", budgetTarget);
+            result.addObject("currency", currency);
             return result;
     }
 

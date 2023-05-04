@@ -27,4 +27,5 @@
     <div class="pos">
         <a class="btn btn-primary" href="/changelog">Registro de cambios</a>
     </div>
+    <a class="btn btn-default" target="_blank" href="${url}">Address</a>
 </petclinic:layout>

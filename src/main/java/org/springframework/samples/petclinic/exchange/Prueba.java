@@ -1,17 +1,28 @@
 package org.springframework.samples.petclinic.exchange;
 
+import java.io.IOException;
+import java.util.Map;
+
+import org.springframework.web.client.RestTemplate;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class Prueba {
 
     public static void main(String[] args) {
-        
-        ExchangeCurrency  ec = new ExchangeCurrency(Currency.BTC, 1.3);
 
-        System.out.println("Tengo " + ec.getValue() +" "+ ec.getCurrency().toString()+",");
+        /*Map<String,Double> map = ExchangeCurrency.currencyMap();
+        for(String s: map.keySet()){
+            System.out.println(s + ": "+ map.get(s));
+        }*/
 
-        ec = ec.convertTo(Currency.EUR);
+        Map<String, Double> map = ExchangeCurrency.currencyMap();
 
-        System.out.println("que equivale a "+ ec.getValue() + ec.getCurrency().toString()+ ".");
-
+        for(String s: map.keySet()){
+            System.out.println(map.get(s));
+        }
 
     }
     

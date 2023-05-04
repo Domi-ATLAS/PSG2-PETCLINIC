@@ -9,12 +9,12 @@
     <h2>Bienvenido al Petclinic PSG2-2223-G4-43</h2>
     <div class="row">
         <div class="col-md-12">
-            <spring:url value="/resources/images/caballo.png" htmlEscape="true" var="petsImage"/>
-            <img class="img-responsive" src="${petsImage}"/>
+            <spring:url value="/resources/images/caballito.png" htmlEscape="true" var="petsImage"/>
+            <img class="img-responsive" src="${petsImage}" width="100" height="100"/>
             
         </div>
+       
     </div>
     <c:out value="${model.get('message')}"/>
     <a class="btn btn-default"  href="/users/${username}">User Profile</a>
-    <a class="btn btn-default"  href="/users/changePlan">Cambiar plan</a>
 </petclinic:layout>

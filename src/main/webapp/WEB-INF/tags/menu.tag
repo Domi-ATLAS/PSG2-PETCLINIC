@@ -48,12 +48,6 @@
 					<span>Causas</span>
 				</petclinic:menuItem>
 
-				<petclinic:menuItem active="${name eq 'profile'}" url="/users/${username}"
-					title="Profile">
-					<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-					<span>Profile</span>
-				</petclinic:menuItem>
-
 				<sec:authorize access="isAuthenticated()">
 					<c:if test="${currentPlan.name ne 'BASIC'}">
 						<petclinic:menuItem active="${name eq 'bookings'}" url="/booking/list"
@@ -101,10 +95,13 @@
 										<div class="col-lg-8">
 											<p class="text-left">
 												<strong><sec:authentication property="name" /></strong>
+													<a>${currentPlan.getName()}</a> 
+
 											</p>
 											<p class="text-left">
 												<a href="<c:url value="/custom-logout" />"
 													class="btn btn-primary btn-block btn-sm">Cerrar Sesion</a>
+
 											</p>
 										</div>
 									</div>

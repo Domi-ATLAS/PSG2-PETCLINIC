@@ -33,20 +33,20 @@ public class CauseController {
 
     @GetMapping()
     public ModelAndView causeList(){
-        Map<Cause,List<ExchangeCurrency>> causeBudgets = causeService.findAllCausesByExchangeCurrency("USD");
+        Map<Cause,List<ExchangeCurrency>> causeBudgets = causeService.findAllCausesByExchangeCurrency(Currency.USD);
         ModelAndView res = new ModelAndView(LIST_CAUSES);
         causeService.checkCauses();
         res.addObject("causeBudgets", causeBudgets);
-        res.addObject("options", ExchangeCurrency.currencyMap().keySet());
+        res.addObject("options", Currency.values());
         return res;
     }
 
     @PostMapping()
     public ModelAndView currencyCauseList(@RequestParam String currency){
         ModelAndView res = new ModelAndView(LIST_CAUSES);
-        Map<Cause,List<ExchangeCurrency>> causeBudgets = causeService.findAllCausesByExchangeCurrency(currency);
+        Map<Cause,List<ExchangeCurrency>> causeBudgets = causeService.findAllCausesByExchangeCurrency(Currency.valueOf(currency));
         res.addObject("causeBudgets", causeBudgets);
-        res.addObject("options", ExchangeCurrency.currencyMap().keySet());
+        res.addObject("options", Currency.values());
         
         return res;
     }

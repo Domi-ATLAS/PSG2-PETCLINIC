@@ -61,13 +61,13 @@ public class CauseService {
         causeRepository.save(toUpdate);
     }
 @Transactional  
-public Map<Cause,List<ExchangeCurrency>> findAllCausesByExchangeCurrency(String currency){
+public Map<Cause,List<ExchangeCurrency>> findAllCausesByExchangeCurrency(Currency currency){
     List<Cause> causes = getAllCauses();
     Map<Cause,List<ExchangeCurrency>> causeBudgets = new HashMap<>();
         List<ExchangeCurrency> budgets = new ArrayList<>();
         for(Cause c: causes){
-            ExchangeCurrency ec1 = new ExchangeCurrency("USD", c.getBudgetTarget());
-            ExchangeCurrency ec2 = new ExchangeCurrency("USD", c.getAchievedBudget());
+            ExchangeCurrency ec1 = new ExchangeCurrency(Currency.USD, c.getBudgetTarget());
+            ExchangeCurrency ec2 = new ExchangeCurrency(Currency.USD, c.getAchievedBudget());
             ec1 = ec1.convertTo(currency);
             ec2 = ec2.convertTo(currency);
             budgets.add(ec1);

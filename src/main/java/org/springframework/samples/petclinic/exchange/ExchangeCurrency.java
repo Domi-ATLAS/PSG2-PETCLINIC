@@ -2,9 +2,6 @@ package org.springframework.samples.petclinic.exchange;
 
 import java.util.Map;
 
-import org.springframework.web.client.RestTemplate;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -17,36 +14,7 @@ public class ExchangeCurrency {
 
     //Properties
     private Double value;
-    private String currency;
-
-    private Map<String, Double> data;
-
-    public Map<String, Double> getData() {
-        return data;
-    }
-
-    public void setData(Map<String, Double> data) {
-        this.data = data;
-    }
-
-    //Reference currency values respect from USD
-    //We are using an API to get the updated values
-
-    public static Map<String,Double> currencyMap(){
-        RestTemplate restTemplate = new RestTemplate();
-        String apiUrl = "https://api.freecurrencyapi.com/v1/latest?apikey=0whTEceC20hXneP3rSzGmYS0Vwws8ieXvxKDRXHU";
-        String json = restTemplate.getForObject(apiUrl, String.class);
-        ObjectMapper mapper = new ObjectMapper();
-        Map<String, Double> data = null;
-        try{
-            CurrencyData currencyData = mapper.readValue(json, CurrencyData.class);
-            data = currencyData.getData();
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return data;
-    }
+    private Currency currency;
 
     //Reference currency values respect from USD
     //The values are volatile, so we could use an API to resolve the current values in the market
@@ -59,20 +27,20 @@ public class ExchangeCurrency {
 
     //Constructors
     public ExchangeCurrency(){
-        this.value = referenceValues.get("USD");
-        this.currency = "USD";
+        this.value = referenceValues.get(Currency.USD);
+        this.currency = Currency.USD;
     }
 
-    public ExchangeCurrency(String currency, Double value){
+    public ExchangeCurrency(Currency currency, Double value){
         this.value = value;
         this.currency = currency;
     }
 
     //This method converts from the current currency to another 
     //Takes the currency to convert to as argument
-    public ExchangeCurrency convertTo(String conversionType){
+    public ExchangeCurrency convertTo(Currency conversionType){
 
-        Double newValue = this.value/currencyMap().get(this.currency)*currencyMap().get(conversionType);
+        Double newValue = this.value/referenceValues.get(this.currency)*referenceValues.get(conversionType);
 
         return new ExchangeCurrency(conversionType, newValue);
     }

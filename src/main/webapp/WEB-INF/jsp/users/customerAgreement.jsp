@@ -8,6 +8,7 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="CA">
+  
     ${htmlText1}
     <table>
     <thead>

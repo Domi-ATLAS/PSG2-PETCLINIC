@@ -8,17 +8,11 @@ import org.springframework.samples.petclinic.maps.MapsService;
 import org.springframework.samples.petclinic.user.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.maps.model.LatLng;
 
 @Controller
 public class WelcomeController {
-
-	@Autowired
-	private UserService userService;
-	
 	
 	  @GetMapping({"/","/welcome"})
 	  public String welcome(Map<String, Object> model, Principal principal) throws Exception{	

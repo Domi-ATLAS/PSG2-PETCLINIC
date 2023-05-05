@@ -50,6 +50,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/users/changePlan/**").authenticated()
 				.antMatchers("/users/**").authenticated()
 				.antMatchers("/address").permitAll()
+				.antMatchers("/docs/CA.pdf/**").permitAll()
 
 				.anyRequest().denyAll()
 				.and()

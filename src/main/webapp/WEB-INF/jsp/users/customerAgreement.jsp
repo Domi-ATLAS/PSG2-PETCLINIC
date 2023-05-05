@@ -205,9 +205,8 @@
           </table>
 
           ${htmlText6}
-
-
-
+          ${htmlText7}
+        
 </petclinic:layout>
 
     

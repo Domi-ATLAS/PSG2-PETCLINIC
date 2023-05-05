@@ -182,9 +182,17 @@ public class UserController {
 	@GetMapping("/users/CA")
 	public ModelAndView CA(){
 		PegDownProcessor pdp = new PegDownProcessor();
+
     	String markdownText = "# Acuerdo con el cliente \n";
 		markdownText +="\n";
-		markdownText +="## Servicios \n";
+		markdownText +="## SoftCut S.L. \n";
+		markdownText +="\n";
+		markdownText +="### Duración del acuerdo\n";
+		markdownText +="\n";
+		markdownText +="Este Acuerdo tendrá una duración vigente en el tiempo del último trimestre del año del acuerdo, hasta los dos primeros trimestres del año siguiente al acuerdo, es decir el acuerdo siempre estará operativo desde Septiembre a Junio, salvo a excepción de casos excepcionales.Si el Cliente desea cancelar los Servicios antes del vencimiento del Acuerdo, deberá notificar al Proveedor con un mes de antelación.Si el Proveedor incumple este Acuerdo de manera significativa, el Cliente puede rescindir este Acuerdo con efecto inmediato sin ninguna penalización.\n";
+		markdownText +="\n";
+		markdownText +="### Servicios \n";
+		markdownText +="\n";
 		markdownText +="El Proveedor proporcionará al Cliente los servicios de petclinic así como todos los servicios asociados con el lanzamiento y uso de este (en adelante, los 'Servicios'). Los usuarios pueden solicitar incidentes de resolución, peticiones de usuario y solicitudes de cambios estimados. Entre los servicios integrados tenemos:\n";
 		markdownText +="\n";
 		markdownText +="* Un servicio de hotel para las mascotas de los propietarios, este servicio les permitirá a los propietarios reservar habitaciones durante el tiempo que quieran para sus mascotas.  \n";
@@ -203,7 +211,7 @@ public class UserController {
 		markdownText +="\n";
 		markdownText +="* Un servicio de de peticiones de cambios, los usuarios podrán hacernos peticiones para que realicemos cambios en la funcionalidad de nuestra aplicación a través de nuestro portal de iTop. \n";
 		markdownText +="\n";
-		markdownText +="## Tarifas y pagos \n";
+		markdownText +="### Tarifas y pagos \n";
 		markdownText +="\n";
 		markdownText +="El Cliente pagará al Proveedor la cantidad descrita en el plan de precios para poder acceder a los siguientes servicios, que es la siguiente (en adelante, las 'Tarifas'): \n";
 		markdownText +=" \n";
@@ -217,12 +225,15 @@ public class UserController {
 		markdownText +=" \n";
 
 		
-		String markdownText2 = "El Proveedor se reserva el derecho de modificar las Tarifas y plazos de pago en caso de cambios en los Servicios.\n";
+		String markdownText2 = "Donde cada cliente pagará y podrá utilizar solo una de las tarifas al mismo tiempo.";
+		markdownText2 +="\n";
+		markdownText2+="El Proveedor se reserva el derecho de modificar las Tarifas y plazos de pago en caso de cambios en los Servicios.\n";
 		markdownText2 +="\n";
 		markdownText2 +="El Cliente acepta pagar todas las Tarifas y gastos relacionados con los Servicios. \n";
 		markdownText2 +=" \n";
 
-		String markdownText3 = "## SLA \n";
+		String markdownText3 = "### SLA \n";
+		markdownText3 +="\n";
 		markdownText3 += "Para poder garantizar que los servicios contratados funcionaran de la forma apropiada dicha en el acuerdo, estableceremos unos “créditos del servicio”(de ahora en adelante los créditos), para poder compensar a los usuarios que han sido afectados por el incumplimiento del contrato por parte de la empresa. \n";
 		markdownText3 +="\n";
 		markdownText3 +="Estos créditos darán una serie de ventajas de las cuales el cliente no podrá negociar, si podría sugerir mejoras o incluso si se da una situación nunca imaginada o contemplada la empresa podrá dar una compensación diferente a la que se va a describir. Dependiendo del plan contratado las compensaciones serán mayores a medida que el plan sea de mayor rango. \n";
@@ -279,12 +290,32 @@ public class UserController {
 
 		String markdownText6 = "<u>Compensación: </u>";
 		markdownText6 +="\n";
-		markdownText6 +="* Plan Basic:  la compensación para este plan será darles el plan advance al siguiente mes.\n";
+		markdownText6 +="* Plan Basic:  la compensación para este plan será darles el plan advanced al siguiente mes.\n";
 		markdownText6 +="\n";
 		markdownText6 +="* la compensación para este plan será darles el plan pro al siguiente mes.\n";
 		markdownText6 +="\n";
 		markdownText6 +="* Plan Pro:  el mes que viene no tendrá que renovar la suscripción, sino que se le dará gratis como compensación. \n";
 		markdownText6 +="\n";
+
+		String makrdownText7 = "### Idenficicación";
+		makrdownText7+="\n";
+		makrdownText7+="Cada contrato con el cliente tendrá un código que lo identifique en este caso: [Ejemplo de código cualquiera, de un cliente 1-123456789, donde el primer dígito que está delante del guión ”-” indica la versión del acuerdo de este cliente]. \n";
+		makrdownText7+="\n";
+		makrdownText7+="### Términos generales \n";
+		makrdownText7+="\n";
+		makrdownText7+="Este acuerdo constituye el acuerdo completo entre el Proveedor y el Cliente y reemplaza cualquier acuerdo o comunicación previa relacionada con los Servicios. El Proveedor se reserva el derecho de modificar este Acuerdo en cualquier momento. El Cliente acepta cumplir con las disposiciones de este Acuerdo. \n";
+		makrdownText7+="\n";
+		makrdownText7+="### Privacidad y seguridad \n";
+		makrdownText7+="\n";
+		makrdownText7+="El Proveedor se compromete a proteger la privacidad y seguridad del Cliente y sus datos personales. El Proveedor se adhiere a todas las leyes y regulaciones aplicables a la protección de datos personales. \n";
+		makrdownText7+="\n";
+		makrdownText7+="Firmado: \n";
+		makrdownText7+="\n";
+		makrdownText7+="SoftCut S.L. \n";
+		makrdownText7+="\n";
+		makrdownText7+="[Nombre del Cliente] \n";
+		makrdownText7+="\n";
+		makrdownText7+="Fecha: [Fecha] \n";
 
 
 
@@ -295,15 +326,17 @@ public class UserController {
 		String htmlText4 = pdp.markdownToHtml(markdownText4);
 		String htmlText5 = pdp.markdownToHtml(markdownText5);
 		String htmlText6 = pdp.markdownToHtml(markdownText6);
+		String htmlText7 = pdp.markdownToHtml(makrdownText7);
 
 
 		ModelAndView res = new ModelAndView(USER_CA);
 		res.addObject("htmlText1",htmlText1);
 		res.addObject("htmlText2", htmlText2);
 		res.addObject("htmlText3", htmlText3);
-		res.addObject("htmlText3", htmlText4);
-		res.addObject("htmlText3", htmlText5);
-		res.addObject("htmlText3", htmlText6);
+		res.addObject("htmlText4", htmlText4);
+		res.addObject("htmlText5", htmlText5);
+		res.addObject("htmlText6", htmlText6);
+		res.addObject("htmlText7", htmlText7);
 
 
 

@@ -9,11 +9,18 @@
 <petclinic:layout pageName="causes">
     <h2>Causa: ${cause.name}</h2>
 
+    <br/>
+    <br/>
+
+    <h2>Currency: ${currency}</h2>
+
+
+
     <div>
         Descripci&oacute;n: ${cause.description}
     </div>
     <div>
-        Dinero conseguido: ${cause.achievedBudget}/${cause.budgetTarget}
+        Dinero conseguido: ${achievedBudget}/${budgetTarget}
     </div>
     <div>
         Organizaci&oacute;n: ${cause.nonProfitOrganization}
@@ -39,7 +46,7 @@
         <c:forEach items="${cause.donations}" var="donation">
             <tr>
                 <td>
-                    <c:out value="${donation.amount}"/>
+                    <c:out value="${donationAmounts.get(donation).value}"/>
                 </td>
                 <td>
                     <c:out value="${donation.donorName}"/>

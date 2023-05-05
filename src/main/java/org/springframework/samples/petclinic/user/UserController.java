@@ -16,7 +16,6 @@
 package org.springframework.samples.petclinic.user;
 
 import java.security.Principal;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -24,15 +23,12 @@ import javax.validation.Valid;
 
 import org.pegdown.PegDownProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.ReturnedType;
-import org.springframework.samples.petclinic.exchange.Currency;
+import org.springframework.samples.petclinic.exchange.ExchangeCurrency;
 import org.springframework.samples.petclinic.owner.Owner;
 import org.springframework.samples.petclinic.owner.OwnerService;
-import org.springframework.samples.petclinic.vet.Specialty;
 import org.springframework.samples.petclinic.vet.Vet;
 import org.springframework.samples.petclinic.vet.VetService;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -150,7 +146,7 @@ public class UserController {
 		res.addObject("vet", vet);
 		res.addObject("principalName", principalName);
 		res.addObject("type", type);
-		res.addObject("options", Currency.values());
+		res.addObject("options", ExchangeCurrency.currencyMap().keySet());
 		return res;
 
 	}
@@ -159,7 +155,7 @@ public class UserController {
 	public ModelAndView changeCurrency(@PathVariable("username") String username,@RequestParam String currency, Principal principal){
 
 		User user = userService.findUser(username).get();
-		user.setPreferedCurrency(Currency.valueOf(currency));
+		user.setPreferedCurrency(currency);
 		userService.saveUser(user);
 		Owner owner = ownerService.findByUsername(user.getUsername());
 		Vet vet = vetService.findByUserName(username);
@@ -178,7 +174,7 @@ public class UserController {
 		res.addObject("vet", vet);
 		res.addObject("principalName", principalName);
 		res.addObject("type", type);
-		res.addObject("options", Currency.values());
+		res.addObject("options", ExchangeCurrency.currencyMap().keySet());
 		return res;
 
 	}

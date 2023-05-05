@@ -216,17 +216,97 @@ public class UserController {
 		markdownText +="En la siguiente tabla se puede observar de forma esquemática lo que nos permite cada plan. \n";
 		markdownText +=" \n";
 
-
+		
 		String markdownText2 = "El Proveedor se reserva el derecho de modificar las Tarifas y plazos de pago en caso de cambios en los Servicios.\n";
 		markdownText2 +="\n";
 		markdownText2 +="El Cliente acepta pagar todas las Tarifas y gastos relacionados con los Servicios. \n";
+		markdownText2 +=" \n";
+
+		String markdownText3 = "## SLA \n";
+		markdownText3 += "Para poder garantizar que los servicios contratados funcionaran de la forma apropiada dicha en el acuerdo, estableceremos unos “créditos del servicio”(de ahora en adelante los créditos), para poder compensar a los usuarios que han sido afectados por el incumplimiento del contrato por parte de la empresa. \n";
+		markdownText3 +="\n";
+		markdownText3 +="Estos créditos darán una serie de ventajas de las cuales el cliente no podrá negociar, si podría sugerir mejoras o incluso si se da una situación nunca imaginada o contemplada la empresa podrá dar una compensación diferente a la que se va a describir. Dependiendo del plan contratado las compensaciones serán mayores a medida que el plan sea de mayor rango. \n";
+		markdownText3 +="\n";
+		markdownText3 +="Los créditos siempre estarán relacionados con fallos del sistema/producto a ofrecer, y con los indicadores de forma que siempre se buscará la ayuda al cliente y nunca descartar la mejora de estos. \n";
+		markdownText3 +="\n";
+		markdownText3 +="Los cambios de indicadores o créditos, serán notificados de diferentes maneras, por ejemplo correo electrónico o sms, al cliente. \n";
+		markdownText3 +="\n";
+		markdownText3 +="<u> Condiciones de medida </u>\n";
+		markdownText3 +="\n";
+		markdownText3 +="En el cálculo de los indicadores no se contabilizarán los tiempos que se indican acontinuación: \n";
+		markdownText3 +="\n";
+		markdownText3 +="* No se contabilizarán los tiempos que no dependan de nuestro servicio, es decir, servicios ajenos/terceros que salen fuera de nuestro total control. \n";
+		markdownText3 +="\n";
+		markdownText3 +="* Tiempo perdido debido a catástrofes naturales/medioambientales que puedan afectar a alguna infraestructura. \n";
+		markdownText3 +="\n";
+		markdownText3 +="<u>Periodo de carencia de aplicación de penalizaciones </u>\n";
+		markdownText3 +="\n";
+		markdownText3 +="Se establece un plazo inicial máximo de 4 semanas donde no se aplicarán compensaciones por incumplimiento del acuerdo, debido que al inicio de la contratación, no se puede garantizar la total fiabilidad del servicio. Después de ese periodo garantizamos que el servicio carezca de incidencias y en caso de que las hayas se aplicarán compensaciones. \n";
+		markdownText3 +="\n";
+		markdownText3 +="<u>Indicadores de los servicios </u>\n";
+		markdownText3 +="\n";
+		markdownText3 += "Clasificaremos los indicadores dependiendo del impacto que generen al sistema, es decir, si el indicador está mostrando un impacto escaso al sistema diremos que su prioridad es baja, y así con media y alta. \n";
+		markdownText3 +="\n";
+		markdownText3 += "* <u>Prioridad baja: </u>\n";
+		markdownText3 +="\n";
+
+
+
+		String markdownText4 = "<u>Compensación: </u>";
+		markdownText4 +="\n";
+		markdownText4 +="* Plan Basic: descuento en el plan pro para el siguiente mes del 30%. \n";
+		markdownText4 +="\n";
+		markdownText4 +="* Plan Advance: descuento en el plan pro para el siguiente mes del 40% \n";
+		markdownText4 +="\n";
+		markdownText4 +="* Plan Pro: descuento en el plan pro para el siguiente mes del 60% \n";
+		markdownText4 +="\n";
+		markdownText4 +="<u>Prioridad media: </u>\n";
+		markdownText4 +="\n";
+
+
+
+		String markdownText5 = "<u>Compensación: </u>";
+		markdownText5 +="\n";
+		markdownText5 +="* Plan Basic: descuento del 10 % en las visitas el siguiente mes. \n";
+		markdownText5 +="\n";
+		markdownText5 +="* descuento del 20 % en las visitas el siguiente mes.\n";
+		markdownText5 +="\n";
+		markdownText5 +="* Plan Pro:  descuento del 35 % en las visitas el siguiente mes. \n";
+		markdownText5 +="\n";
+		markdownText5 +="<u>Prioridad alta: </u>\n";
+		markdownText5 +="\n";
+
+
+		String markdownText6 = "<u>Compensación: </u>";
+		markdownText6 +="\n";
+		markdownText6 +="* Plan Basic:  la compensación para este plan será darles el plan advance al siguiente mes.\n";
+		markdownText6 +="\n";
+		markdownText6 +="* la compensación para este plan será darles el plan pro al siguiente mes.\n";
+		markdownText6 +="\n";
+		markdownText6 +="* Plan Pro:  el mes que viene no tendrá que renovar la suscripción, sino que se le dará gratis como compensación. \n";
+		markdownText6 +="\n";
+
+
+
 
     	String htmlText1 = pdp.markdownToHtml(markdownText);
 		String htmlText2 = pdp.markdownToHtml(markdownText2);
+		String htmlText3 = pdp.markdownToHtml(markdownText3);
+		String htmlText4 = pdp.markdownToHtml(markdownText4);
+		String htmlText5 = pdp.markdownToHtml(markdownText5);
+		String htmlText6 = pdp.markdownToHtml(markdownText6);
+
 
 		ModelAndView res = new ModelAndView(USER_CA);
 		res.addObject("htmlText1",htmlText1);
 		res.addObject("htmlText2", htmlText2);
+		res.addObject("htmlText3", htmlText3);
+		res.addObject("htmlText3", htmlText4);
+		res.addObject("htmlText3", htmlText5);
+		res.addObject("htmlText3", htmlText6);
+
+
+
 		return res;
 	}
 

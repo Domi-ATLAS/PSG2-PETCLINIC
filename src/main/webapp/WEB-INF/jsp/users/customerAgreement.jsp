@@ -93,8 +93,8 @@
     ${htmlText2}
 
     <br/>
-    <h2>Indicadores de servicios</h2>
     <br/>
+    ${htmlText3}
 
     <table>
       <thead>
@@ -129,7 +129,8 @@
 
       <br/>
       <br/>
-  
+      ${htmlText4}
+
       <table>
         <thead>
           <tr>
@@ -169,6 +170,8 @@
 
         <br/>
         <br/>
+        ${htmlText5}
+
     
         <table>
           <thead>
@@ -200,6 +203,9 @@
               </tr>
             </tbody>
           </table>
+
+          ${htmlText6}
+
 
 
 </petclinic:layout>

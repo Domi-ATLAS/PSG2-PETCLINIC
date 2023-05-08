@@ -141,12 +141,14 @@ public class Owner extends Person {
 	
 	public Pet getPetwithIdDifferent(String name,Integer id) {
 		name = name.toLowerCase();
+		if(getPetsInternal()!=null){
 		for (Pet pet : getPetsInternal()) {
 			String compName = pet.getName();
 			compName = compName.toLowerCase();
-			if (compName.equals(name) && !pet.getId().equals(id)) {
+			if (pet!=null&&compName!=null&&compName.equals(name) && !pet.getId().equals(id)) {
 				return pet;
 			}
+		}
 		}
 		return null;
 	}

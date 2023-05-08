@@ -57,4 +57,7 @@ public interface VetRepository extends CrudRepository<Vet, Integer>{
 	@Modifying
     @Query(value="DELETE FROM vets WHERE id = ?1",nativeQuery = true)
     void deleteVet(@Param("id") Integer id);
+
+	@Query("SELECT v FROM Vet v JOIN v.user u WHERE u.username = :username")
+    Vet findByUsername(String username);
 }

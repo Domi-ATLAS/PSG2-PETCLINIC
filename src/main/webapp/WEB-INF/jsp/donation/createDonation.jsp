@@ -14,7 +14,7 @@
             <input type="hidden" name="donorName" value="${donorName}"/>
             <div class="form-group has-feedback">                
                 <tr>
-                    <petclinic:inputField label="Cantidad:" name="amount"/>
+                    <petclinic:inputField label="Cantidad: (En USD)" name="amount"/>
                 </tr>
                 <tr>
                     <petclinic:inputField label="Mensaje:" name="message"/>

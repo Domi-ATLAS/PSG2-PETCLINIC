@@ -1,10 +1,14 @@
 package org.springframework.samples.petclinic.cause;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.petclinic.exchange.ExchangeCurrency;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -55,5 +59,33 @@ public class CauseService {
         }
         causeRepository.save(toUpdate);
     }
+@Transactional  
+public Map<Cause,List<ExchangeCurrency>> findAllCausesByExchangeCurrency(String currency){
+    List<Cause> causes = causeRepository.findAll();
+    Map<Cause,List<ExchangeCurrency>> causeBudgets = new HashMap<>();
+        for(Cause c: causes){
+            List<ExchangeCurrency> budgets = new ArrayList<>();
+            ExchangeCurrency ec1 = new ExchangeCurrency("USD", c.getBudgetTarget());
+            ExchangeCurrency ec2 = new ExchangeCurrency("USD", c.getAchievedBudget());
+            ec1 = ec1.convertTo(currency);
+            ec2 = ec2.convertTo(currency);
+            budgets.add(ec1);
+            budgets.add(ec2);
+            causeBudgets.put(c, budgets);
+        }
+
+        return causeBudgets;
     
+}
+
+@Transactional
+public void checkCauses(){
+    for(Cause c: causeRepository.findAll()){
+        if(c.getAchievedBudget()>=c.getBudgetTarget()){
+            c.setIsClosed(true);
+            editCause(c);
+        }
+    }
+}
+
 }

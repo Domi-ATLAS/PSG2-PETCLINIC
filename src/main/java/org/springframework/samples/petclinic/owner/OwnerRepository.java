@@ -68,4 +68,7 @@ public interface OwnerRepository extends Repository<Owner, Integer> {
 	
     List<Owner> findAll();
 
+	@Query("SELECT o FROM Owner o JOIN o.user u WHERE u.username = :username")
+    Owner findByUsername(String username);
+
 }

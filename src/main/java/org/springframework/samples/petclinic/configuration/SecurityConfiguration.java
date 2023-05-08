@@ -42,10 +42,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/vets/**").hasAnyAuthority("admin")
 				.antMatchers("/booking/**").hasAuthority("owner")
 				.antMatchers("/custom-logout").permitAll()
+				.antMatchers("/changelog").permitAll()
+				.antMatchers("/support").permitAll()
 				.antMatchers("/causes/**").hasAnyAuthority("owner","admin")
 				.antMatchers("/donation/**").hasAnyAuthority("owner","admin")
 				.antMatchers("/adoptionRequest/**").hasAuthority("owner")
 				.antMatchers("/adoptionResponse/**").hasAuthority("owner")
+				.antMatchers("/users/changePlan/**").authenticated()
+				.antMatchers("/users/**").authenticated()
+				.antMatchers("/address").permitAll()
+				.antMatchers("/docs/CA.pdf/**").permitAll()
 
 				.anyRequest().denyAll()
 				.and()
@@ -55,13 +61,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.and()
 				.logout()
 				.logoutUrl("/custom-logout")
-				.logoutSuccessUrl("/");
+				.logoutSuccessUrl("/")
+				.and().csrf().disable();
                 // Configuración para que funcione la consola de administración 
                 // de la BD H2 (deshabilitar las cabeceras de protección contra
                 // ataques de tipo csrf y habilitar los framesets si su contenido
                 // se sirve desde esta misma página.
                 http.csrf().ignoringAntMatchers("/h2-console/**");
                 http.headers().frameOptions().sameOrigin();
+				http.csrf().disable();
 	}
 
 	@Override

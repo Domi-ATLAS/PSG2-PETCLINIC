@@ -29,16 +29,18 @@
 				</petclinic:menuItem>
 
 				<petclinic:menuItem active="${name eq 'owners'}" url="/owners/find"
-					title="buscar propietarios">
-					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-					<span>Buscar propietarios</span>
+						title="propietarios">
+						<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+						<span>Propietarios</span>
 				</petclinic:menuItem>
-
-				<petclinic:menuItem active="${name eq 'vets'}" url="/vets"
-					title="veterinarios">
-					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-					<span>Veterinarios</span>
-				</petclinic:menuItem>
+				
+				<sec:authorize access="hasRole('admin')">
+					<petclinic:menuItem active="${name eq 'vets'}" url="/vets"
+						title="veterinarios">
+						<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+						<span>Veterinarios</span>
+					</petclinic:menuItem>
+				</sec:authorize>
 
 				<petclinic:menuItem active="${name eq 'causes'}" url="/causes"
 					title="Causas">
@@ -46,18 +48,31 @@
 					<span>Causas</span>
 				</petclinic:menuItem>
 
-				<petclinic:menuItem active="${name eq 'bookings'}" url="/booking/list"
-					title="reservas">
-					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-					<span>Reservas</span>
-				</petclinic:menuItem>
+				<sec:authorize access="isAuthenticated()">
+					<c:if test="${currentPlan.name ne 'BASIC'}">
+						<petclinic:menuItem active="${name eq 'bookings'}" url="/booking/list"
+							title="reservas">
+							<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+							<span>Reservas</span>
+						</petclinic:menuItem>
+					</c:if>
+				</sec:authorize>
 
-				<petclinic:menuItem active="${name eq 'adoptionRequest'}" url="/adoptionRequest/list"
-					title="Adopciones">
-					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-					<span>Adopciones</span>
-				</petclinic:menuItem>
+				<sec:authorize access="isAuthenticated()">
+					<c:if test="${currentPlan.name ne 'BASIC'}">
+						<petclinic:menuItem active="${name eq 'adoptionRequest'}" url="/adoptionRequest/list"	
+							title="Adopciones">
+							<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+							<span>Adopciones</span>
+						</petclinic:menuItem>
+					</c:if>
+				</sec:authorize>
 
+				<petclinic:menuItem active="${name eq 'adoptionRequest'}" url="/users/CA"	
+					title="Acuerdo">
+					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+					<span>Acuerdo</span>
+				</petclinic:menuItem>
 			</ul>
 
 
@@ -86,10 +101,13 @@
 										<div class="col-lg-8">
 											<p class="text-left">
 												<strong><sec:authentication property="name" /></strong>
+													<a>${currentPlan.getName()}</a> 
+
 											</p>
 											<p class="text-left">
 												<a href="<c:url value="/custom-logout" />"
 													class="btn btn-primary btn-block btn-sm">Cerrar Sesion</a>
+
 											</p>
 										</div>
 									</div>

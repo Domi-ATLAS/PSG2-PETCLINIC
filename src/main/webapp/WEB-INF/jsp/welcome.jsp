@@ -5,6 +5,8 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- %@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %-->  
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 
 <style>
 	.changelog {
@@ -27,8 +29,10 @@
         </div>
        
     </div>
-    <c:out value="${model.get('message')}"/>
-    <a class="btn btn-default"  href="/users/${username}">User Profile</a>
+    <sec:authorize access="isAuthenticated()">
+        <c:out value="${model.get('message')}"/>
+        <a class="btn btn-default"  href="/users/${username}">Perfil de usuario</a>
+    </sec:authorize>
 
     <div class="changelog">
         <a class="btn btn-primary" href="/changelog">Registro de cambios</a>
@@ -38,5 +42,5 @@
         <a class="btn btn-primary" href="/support">Página de soporte</a>
     </div>
 
-    <a class="btn btn-default" target="_blank" href="${url}">Address</a>
+    <a class="btn btn-default" target="_blank" href="${url}">¡Visítanos en esta dirección!</a>
 </petclinic:layout>

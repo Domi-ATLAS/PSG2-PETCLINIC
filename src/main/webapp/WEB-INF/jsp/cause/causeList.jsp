@@ -7,30 +7,30 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="causes">
-    <h2>Causes</h2>
+    <h2>Causas</h2>
 
     <br/>        
 
-    <h2>Select currency:</h2>
+    <h2>Selecciona una divisa:</h2>
 
     <div style="text-align: center; align-items: center;">
         <form action="/causes" method="post">
-            <label for="currency">Select currency:</label>
+            <label for="currency">Divisas:</label>
             <select name="currency" id="currency">
               <c:forEach items="${options}" var="option">
                 <option value="${option}">${option}</option>
               </c:forEach>
             </select>
-            <button type="submit">Submit</button>
+            <button type="submit">Aceptar</button>
           </form>
     </div>
 
     <table id="causesList" class="table table-striped">
         <thead style="background-color: lightgray;">
         <tr>
-            <th style="width: 150px;">Name</th>
-            <th style=" width: 200px;">Current Amount</th>
-            <th>Target Amount</th>
+            <th style="width: 150px;">Nombre</th>
+            <th style=" width: 200px;">Cantidad conseguida</th>
+            <th>Cantidad objetivo</th>
             <th></th>
         </tr>
         </thead>

@@ -15,15 +15,15 @@
         <c:if test="${type == 'veterinarian'}">
             <table class="table table-striped">
                 <tr>
-                    <th>Name</th>
+                    <th>Nombre</th>
                     <td><b><c:out value="${user.username} "/></b></td>
                 </tr>
                 <tr>
-                    <th>Address</th>
+                    <th>Dirección</th>
                     <td><c:out value="${vet.firstName}"/></td>
                 </tr>
                 <tr>
-                    <th>City</th>
+                    <th>Ciudad</th>
                     <td><c:out value="${vet.lastName}"/></td>
                 </tr>
             </table>
@@ -31,7 +31,7 @@
             <br/>
             <br/>
             <br/>
-                <h2>Specialties</h2>
+                <h2>Especialidades</h2>
 
                 <c:forEach var="sp" items="${vet.specialties}">
             
@@ -51,19 +51,19 @@
         <c:if test="${type == 'owner'}">
             <table class="table table-striped">
                 <tr>
-                    <th>Name</th>
+                    <th>Nombre</th>
                     <td><b><c:out value="${user.username} "/></b></td>
                 </tr>
                 <tr>
-                    <th>Address</th>
+                    <th>Dirección</th>
                     <td><c:out value="${owner.address}"/></td>
                 </tr>
                 <tr>
-                    <th>City</th>
+                    <th>Ciudad</th>
                     <td><c:out value="${owner.city}"/></td>
                 </tr>
                 <tr>
-                    <th>Telephone Number</th>
+                    <th>Número de teléfono</th>
                     <td><c:out value="${owner.telephone}"/></td>
                 </tr>
             </table>
@@ -71,7 +71,7 @@
             <br/>
             <br/>
             <br/>
-            <h2>Pets</h2>
+            <h2>Macotas</h2>
         
             <table class="table table-striped">
                 <c:forEach var="pet" items="${owner.pets}">
@@ -79,11 +79,11 @@
                     <tr>
                         <td valign="top">
                             <dl class="dl-horizontal">
-                                <dt>Name</dt>
+                                <dt>Nombre</dt>
                                 <dd><c:out value="${pet.name}"/></dd>
-                                <dt>BirthDay</dt>
+                                <dt>Cumpleaños</dt>
                                 <dd><petclinic:localDate date="${pet.birthDate}" pattern="yyyy-MM-dd"/></dd>
-                                <dt>Pet type</dt>
+                                <dt>Tipo de mascota</dt>
                                 <dd><c:out value="${pet.type.name}"/></dd>
                             </dl>
                         </td>
@@ -93,17 +93,17 @@
             </table>
         </c:if>
 
-        <h2>Prefered currency: ${user.preferedCurrency}</h2>
+        <h2>Divisa preferida: ${user.preferedCurrency}</h2>
 
         <div style="text-align: center; align-items: center;">
             <form action="/users/${user.username}" method="post">
-                <label for="currency">Change prefered currency:</label>
+                <label for="currency">Cambiar divisa preferida:</label>
                 <select name="currency" id="currency">
                   <c:forEach items="${options}" var="option">
                     <option value="${option}">${option}</option>
                   </c:forEach>
                 </select>
-                <button type="submit">Submit</button>
+                <button type="submit">Aceptar</button>
             </form>
         </div>
 

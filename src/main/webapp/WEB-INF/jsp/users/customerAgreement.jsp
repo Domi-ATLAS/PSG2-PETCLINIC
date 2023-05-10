@@ -201,6 +201,18 @@
                 <td style="padding: 10px; border: 1px solid black;text-align: center;">Porcentaje</td>
                 <td style="padding: 10px; border: 1px solid black;text-align: center;">I10 >= 95.5</td>
               </tr>
+              <tr>
+                <td style="padding: 10px; border: 1px solid black;">Indicador 11</td>
+                <td style="padding: 10px; border: 1px solid black;text-align: center;">Tiempo desde que un incidente se reporta hasta que se asigna a alguien</td>
+                <td style="padding: 10px; border: 1px solid black;text-align: center;">Horas</td>
+                <td style="padding: 10px; border: 1px solid black;text-align: center;">Si la prioridad es cr&iacute;tica 1 hora, si no, 4 horas</td>
+              </tr>
+              <tr>
+                <td style="padding: 10px; border: 1px solid black;">Indicador 12</td>
+                <td style="padding: 10px; border: 1px solid black;text-align: center;">Tiempo desde que un incidente se reporta hasta que se resuelve</td>
+                <td style="padding: 10px; border: 1px solid black;text-align: center;">Horas</td>
+                <td style="padding: 10px; border: 1px solid black;text-align: center;">Si la prioridad es cr&iacute;tica 4 hora2, si no, 24 horas</td>
+              </tr>
             </tbody>
           </table>
 

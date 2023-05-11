@@ -43,4 +43,11 @@
     </div>
 
     <a class="btn btn-default" target="_blank" href="${url}">¡Visítanos en esta dirección!</a>
+
+    <script>
+        var beamer_config = {
+            product_id : 'jWLLrVIT55236' //DO NOT CHANGE: This is your product code on Beamer
+        };
+    </script>
+    <script type="text/javascript" src="https://app.getbeamer.com/js/beamer-embed.js" defer="defer"></script>
 </petclinic:layout>
